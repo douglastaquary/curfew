@@ -74,6 +74,22 @@ A primeira venda é um diagnóstico de 15 dias, só leitura. A plataforma entra 
 
 **O que se assina depois.** Fechamento toda noite: US$ 48 por desenvolvedor com agente, por mês, mais US$ 12 mil de plataforma, contrato anual. A chave com prazo só entra quando a empresa já confia no fechamento.
 
+## Como roda
+
+A plataforma fica na nuvem e fala com as APIs do GitHub e da AWS. O sistema operacional de quem usa o agente quase não importa. O único programa local é um binário em Go, para ler o log do agente no Mac, no Windows e no Linux.
+
+1. A empresa instala um GitHub App só de leitura e cria uma role na AWS que a Curfew assume por uma hora.
+2. Um worker lista webhook, chave, token aprovado pela org e idade da chave. Guarda o identificador, a data e o dono. Não precisa copiar o segredo para dizer que ele ainda vale.
+3. O programa local, se a empresa quiser, lê o log do agente na máquina e manda o lugar onde achou uma senha, não a senha inteira.
+4. O painel mostra a fila.
+5. Fechar é outra permissão, com um botão e uma pessoa confirmando. A primeira versão só lê.
+
+Stack de um dev só: Next.js e TypeScript no painel e nos conectores, Postgres, um servidor. Go só no programa local.
+
+Infra do começo: um servidor e um Postgres. Abaixo de US$ 1 mil no primeiro ano de máquina. O aporte de verdade, se a pessoa sair do emprego, é seis meses de custo de vida, não a nuvem.
+
+Quem já cobre parte disso, em 2026: Astrix, comprada pela Cisco; Oasis, em negócio com a Cyera; Aembit, ainda independente, no caminho da chamada; Token Security, no mapa de identidades. Noma e Zenity governam a ação do agente. A OpenAI publica o desenho de chave curta por tarefa e entrega isso para entrar na própria OpenAI e no sandbox dela. Ela não varre o GitHub e a AWS do cliente atrás do que o agente deixou.
+
 ## Como rodar
 
 Este repositório é a explicação da plataforma e o plano. Não há serviço para subir.
