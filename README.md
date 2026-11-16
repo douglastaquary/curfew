@@ -74,6 +74,17 @@ A primeira venda é um diagnóstico de 15 dias, só leitura. A plataforma entra 
 
 **O que se assina depois.** Fechamento toda noite: US$ 48 por desenvolvedor com agente, por mês, mais US$ 12 mil de plataforma, contrato anual. A chave com prazo só entra quando a empresa já confia no fechamento.
 
+## Reunião de 20 minutos
+
+O sim é o diagnóstico. Na reunião cabem a pergunta, o exemplo, o preço e o pedido.
+
+1. Abra com a frase: vocês já liberaram agente. Em 15 dias, só lendo, eu devolvo o que esses agentes ainda conseguem acessar. Se a lista vier vazia, o trabalho acaba.
+2. Pergunte e cale: já usam agente, de onde sai o acesso ao GitHub e à AWS, e quem recolhe quando a tarefa acaba.
+3. Conte um caso: o agente ganha token e chave, o trabalho entra, o acesso fica, ninguém é dono.
+4. Mostre quatro linhas de exemplo e diga que a lista de verdade é a deles.
+5. Feche o número: 15 dias, leitura, US$ 18 mil no início. Lista vazia encerra. Lista cheia vira crédito. Fora: apagar produção e trocar a ferramenta.
+6. Peça os dois nomes, GitHub e AWS, e pare de falar.
+
 ## Como roda
 
 A plataforma fica na nuvem e fala com as APIs do GitHub e da AWS. O sistema operacional de quem usa o agente quase não importa. O único programa local é um binário em Go, para ler o log do agente no Mac, no Windows e no Linux.
