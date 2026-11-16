@@ -101,6 +101,18 @@ Infra do começo: um servidor e um Postgres. Abaixo de US$ 1 mil no primeiro ano
 
 Quem já cobre parte disso, em 2026: Astrix, comprada pela Cisco; Oasis, em negócio com a Cyera; Aembit, ainda independente, no caminho da chamada; Token Security, no mapa de identidades. Noma e Zenity governam a ação do agente. A OpenAI publica o desenho de chave curta por tarefa e entrega isso para entrar na própria OpenAI e no sandbox dela. Ela não varre o GitHub e a AWS do cliente atrás do que o agente deixou.
 
+## Segurança tempestiva
+
+Tempestiva quer dizer no tempo certo. A porta do agente é vista e fechada enquanto ainda importa. Se o problema for a própria Curfew, o cliente corta o acesso em minutos e recebe o aviso no mesmo dia.
+
+Um atacante que entre na Curfew quereria a chave de leitura do GitHub, o direito de assumir a role da AWS, a fila de acessos esquecidos e qualquer senha que tivesse caído no nosso log. O desenho limita isso: o app é só de leitura, a role dura uma hora por varredura, a fila guarda identificador, data e dono, e o valor do segredo não entra no banco, na URL nem no log.
+
+O que viaja vai por HTTPS. O que precisa ficar guardado, a credencial da integração, fica cifrado com a chave separada do banco. Nome de funcionário na fila é dado pessoal. O cliente é o controlador. A Curfew trata sob instrução dele.
+
+Pela Resolução CD/ANPD nº 15/2024, o controlador comunica incidente com dado pessoal à ANPD e aos titulares em três dias úteis depois de saber. Agente de pequeno porte conta esse prazo em dobro. A Curfew avisa o cliente no mesmo dia para esse prazo começar com folga.
+
+No primeiro contrato não se promete SOC 2 nem plantão de 24 horas. Promete-se leitura, segredo fora do nosso banco e um desligamento que o cliente faz sozinho, apagando o app do GitHub e a role da AWS.
+
 ## Como rodar
 
 Este repositório é a explicação da plataforma e o plano. Não há serviço para subir.
