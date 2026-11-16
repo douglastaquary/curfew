@@ -58,6 +58,22 @@ Um fechamento com 30 desenvolvedores fica perto de US$ 30 mil por ano. Uma chave
 
 A métrica é o tempo que um acesso esquecido continua valendo. Se esse tempo cai de semanas para menos de um dia, a plataforma está provada.
 
+## Proposta comercial
+
+A primeira venda é um diagnóstico de 15 dias, só leitura. A plataforma entra depois que a empresa vê a própria lista.
+
+**Frase da reunião.** Vocês já liberaram agente. Em 15 dias eu devolvo a lista do que esses agentes ainda conseguem acessar: token, chave, webhook e senha em log, com idade e dono. Se a lista vier vazia, a conversa acaba.
+
+**O que cada pessoa quer ouvir.**
+
+- Segurança: quando o cliente perguntar como a empresa governa o acesso dos agentes, a resposta é uma lista que fecha, com data.
+- Plataforma: a limpeza de sexta volta pronta, e só sobra o que precisa de um dono.
+- Quem quer liberar agente para o time inteiro: a chave vale só durante a tarefa.
+
+**O que se assina primeiro.** Diagnóstico, US$ 18 mil, pago no início. GitHub e AWS em leitura. Entrega: a fila, a ação de cada linha e o que ficou de fora. Fora: apagar produção e trocar a ferramenta de agente. Se a lista tiver itens, o valor vira crédito no contrato de fechamento.
+
+**O que se assina depois.** Fechamento toda noite: US$ 48 por desenvolvedor com agente, por mês, mais US$ 12 mil de plataforma, contrato anual. A chave com prazo só entra quando a empresa já confia no fechamento.
+
 ## Como rodar
 
 Este repositório é a explicação da plataforma e o plano. Não há serviço para subir.
