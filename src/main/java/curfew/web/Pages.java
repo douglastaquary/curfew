@@ -2,6 +2,7 @@ package curfew.web;
 
 import java.util.List;
 
+import curfew.read.ReadCoordinator;
 import curfew.scan.ClassifiedAccess;
 import curfew.scan.TokenLedger;
 import curfew.scan.TokenReport;
@@ -29,14 +30,16 @@ public class Pages {
 
         public static native TemplateInstance scan(String nav, String state, TokenReport report, int items);
 
-        public static native TemplateInstance connections(String nav);
+        public static native TemplateInstance connections(String nav, String github, String aws);
     }
 
     private final AccessStore store;
+    private final ReadCoordinator reading;
 
     @Inject
-    public Pages(AccessStore store) {
+    public Pages(AccessStore store, ReadCoordinator reading) {
         this.store = store;
+        this.reading = reading;
     }
 
     @GET
@@ -68,6 +71,6 @@ public class Pages {
     @Path("conexoes")
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance connections() {
-        return Templates.connections("conexoes");
+        return Templates.connections("conexoes", reading.githubLabel(), reading.awsLabel());
     }
 }

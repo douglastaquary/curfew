@@ -31,7 +31,7 @@ Quem usa a aplicação encontra isto:
 - `/` fila. Também `/?estado=vazio`, `/?estado=carregando` e `/?estado=erro`.
 - `/acessos/gh-token-18` detalhe. Id que não existe responde 404.
 - `/varredura` e `GET /varredura/eventos`. O log não leva segredo. A leitura de exemplo fecha em 6 itens, 6 por regra, 0 chamadas de modelo e 720 tokens evitados.
-- `/conexoes` leitura ainda desligada.
+- `/conexoes` mostra se GitHub e AWS estão ligados. Sem variável, os dois ficam desligados e a fila é o exemplo.
 - `docs/index.html` é a landing. No ar: https://douglastaquary.github.io/curfew/
 
 ## Desenvolver

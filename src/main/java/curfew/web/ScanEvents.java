@@ -6,8 +6,10 @@ import java.util.List;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import curfew.read.ReadCoordinator;
+import curfew.read.ReadingFailed;
 import curfew.scan.ClassifiedAccess;
-import curfew.scan.MockAccessSource;
+import curfew.scan.RawAccess;
 import curfew.scan.ScanEngine;
 import curfew.scan.ScanLog;
 import curfew.scan.ScanRules;
@@ -29,15 +31,18 @@ import jakarta.ws.rs.sse.SseEventSink;
 public class ScanEvents {
 
     private final AccessStore store;
+    private final ReadCoordinator reading;
     private final int parallelism;
     private final int pauseMs;
 
     @Inject
     public ScanEvents(
             AccessStore store,
+            ReadCoordinator reading,
             @ConfigProperty(name = "curfew.scan.parallelism") int parallelism,
             @ConfigProperty(name = "curfew.scan.log-pause-ms") int pauseMs) {
         this.store = store;
+        this.reading = reading;
         this.parallelism = parallelism;
         this.pauseMs = pauseMs;
     }
@@ -62,8 +67,14 @@ public class ScanEvents {
             }
 
             send(sink, sse, "line", ScanLog.clock(Instant.now()) + "  Início da leitura. GitHub e AWS.");
-            List<ClassifiedAccess> classified = new ScanEngine(parallelism)
-                    .classifyAll(new MockAccessSource().list(), new ScanRules());
+            List<RawAccess> raw;
+            try {
+                raw = reading.list();
+            } catch (ReadingFailed exception) {
+                send(sink, sse, "fault", exception.getMessage());
+                return;
+            }
+            List<ClassifiedAccess> classified = new ScanEngine(parallelism).classifyAll(raw, new ScanRules());
             store.replace(classified);
             for (ClassifiedAccess item : classified) {
                 if (sink.isClosed()) {

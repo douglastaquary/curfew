@@ -35,8 +35,8 @@ Abra `http://127.0.0.1:8473/`. Estados da fila: `/?estado=vazio`, `/?estado=carr
 
 O push vai para o GitHub, `douglastaquary/curfew`. Não envie este projeto para o repositório do Cursor.
 
-Um provedor novo implementa a mesma forma de `RawAccess`, sem campo de segredo, e passa por `ScanRules`. Não grave credencial no repositório.
+A leitura real está em `curfew.read`. Sem variável, a fila continua o exemplo. Com `CURFEW_GITHUB_TOKEN` ou o par `CURFEW_AWS_ACCESS_KEY_ID` e `CURFEW_AWS_SECRET_ACCESS_KEY`, a varredura lê webhook, nome de segredo, chave de deploy e chaves IAM ativas. O valor não entra na fila. O perfil de teste força `curfew.read.mode=mock`.
 
 ## Parar
 
-Não faça conector real, deploy, modelo ou fechamento de acesso sem um sim explícito de quem mantém o projeto. Se o layout dos prints for reprovado, o corte seguinte pode testar TypeScript compilado para um `app.js` dentro do mesmo JAR.
+Não faça deploy, modelo ou fechamento de acesso sem um sim explícito de quem mantém o projeto. Não grave credencial no repositório. Se o layout dos prints for reprovado, o corte seguinte pode testar TypeScript compilado para um `app.js` dentro do mesmo JAR.

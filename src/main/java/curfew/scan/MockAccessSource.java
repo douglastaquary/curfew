@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Fila fictícia de uma empresa que não existe. Serve para a tela e para o teste.
  */
-public final class MockAccessSource {
+public final class MockAccessSource implements AccessSource {
 
     public List<RawAccess> list() {
         return List.of(

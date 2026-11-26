@@ -16,3 +16,4 @@ Cada linha cita um teste que trava a correção. `LearningLedgerTest` falha se a
 | A engine classifica cada item uma vez, no máximo quatro ao mesmo tempo | `ScanEngineTest.classifiesEveryItemOnceUnderTheConcurrencyCap` |
 | Regra evita um orçamento fixo e não chama modelo | `TokenLedgerTest.rulesAvoidAFixedBudgetAndNeverCallAModel` |
 | O registro da decisão não tem campo de segredo | `TokenLedgerTest.recordsHaveNoSecretField` |
+| A leitura real descarta URL, material de chave e valor de segredo | `MetadataInventoryTest.dropsUrlKeyMaterialAndSecretValues` |
