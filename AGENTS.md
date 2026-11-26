@@ -10,6 +10,10 @@ Fora deste corte, até esse sim:
 - Modelo de linguagem
 - Fechar, revogar ou apagar qualquer acesso
 
+## Onde publicar
+
+O push vai para o GitHub, no repositório `douglastaquary/curfew`. Não envie este projeto para o repositório do Cursor.
+
 ## Como rodar
 
 ```bash

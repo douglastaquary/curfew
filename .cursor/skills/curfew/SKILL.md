@@ -29,7 +29,11 @@ Abra `http://127.0.0.1:8473/`. Estados da fila: `/?estado=vazio`, `/?estado=carr
 - Tokens evitados: `TokenLedger` (o contador de chamadas de modelo permanece zero)
 - Log ao vivo: `GET /varredura/eventos`. Cada linha leva sistema, idade, dono e ação. Sem segredo.
 - Telas: `src/main/resources/templates/Pages/` e `src/main/resources/META-INF/resources/app.css`
-- Filtro no navegador: `app.js`. Ele não faz pedido de rede.
+- Filtro no navegador: `app.js`. O log da varredura lê `GET /varredura/eventos`.
+
+## Onde publicar
+
+O push vai para o GitHub, `douglastaquary/curfew`. Não envie este projeto para o repositório do Cursor.
 
 Um provedor novo implementa a mesma forma de `RawAccess`, sem campo de segredo, e passa por `ScanRules`. Não grave credencial no repositório.
 
