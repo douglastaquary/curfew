@@ -72,10 +72,11 @@ O zip é `target/function.zip`. Gerar o zip não publica.
 | 26 nov 2026, 08:43, Brasília | `sam --version` imprimiu `SAM CLI, version 1.132.0` | O CLI passou. Não reinstale. Siga para o pacote no Java 21 e para o deploy. |
 | 26 nov 2026, 08:47, Brasília | A stack `curfew` subiu em us-east-1. `ApiUrl` é `https://f3nqvezln1.execute-api.us-east-1.amazonaws.com` | A função responde 500, `Internal Server Error`, em `/` e `/porta`. O próximo passo é o log, não outro deploy. |
 | 26 nov 2026, 08:51, Brasília | O log diz `Missing HTTP method in the request event` | A HTTP API falava payload 2.0. A função lê o formato 1.0. O template pede `PayloadFormatVersion` 1.0. |
+| 26 nov 2026, 09:02, Brasília | `/porta` abriu, o segredo entrou e a fila apareceu | O formato 1.0 fecha o 500. A prova no ar é a página da porta e, depois do segredo, a fila. |
 
-O 500 vem do formato do evento. A HTTP API mandava payload format 2.0. A extensão lê o formato 1.0 e registra `Missing HTTP method in the request event`. O template agora pede `PayloadFormatVersion` 1.0. O endereço continua o mesmo. Publique de novo com o mesmo `CURFEW_GATE`.
+O 500 vinha do formato do evento. A HTTP API mandava payload format 2.0. A extensão lê o formato 1.0 e registrava `Missing HTTP method in the request event`. O template pede `PayloadFormatVersion` 1.0. O mesmo endereço passou a abrir `/porta`. O segredo de `CURFEW_GATE` levou à fila.
 
-A stack existe. A página ainda não abre. No Mac, com o mesmo perfil AWS:
+A stack existe e a página abre. Se voltar o 500, no Mac, com o mesmo perfil AWS:
 
 ```bash
 sam logs -n CurfewFunction --stack-name curfew --region us-east-1 -s '30min ago'
