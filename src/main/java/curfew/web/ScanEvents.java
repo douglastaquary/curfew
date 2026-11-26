@@ -74,6 +74,9 @@ public class ScanEvents {
                 send(sink, sse, "fault", exception.getMessage());
                 return;
             }
+            for (RawAccess row : raw) {
+                store.rememberTarget(row.id(), row.target());
+            }
             List<ClassifiedAccess> classified = new ScanEngine(parallelism).classifyAll(raw, new ScanRules());
             store.replace(classified);
             for (ClassifiedAccess item : classified) {

@@ -29,9 +29,15 @@ MARKERS = (
     "Leitura ainda não ligada",
     "Acompanhamento",
     "Passagem da noite",
+    "Executar a passagem",
     "Trancar e pedir um humano",
 )
-STRIPPED = ("CURFEW_GITHUB_TOKEN", "CURFEW_AWS_ACCESS_KEY_ID", "CURFEW_AWS_SECRET_ACCESS_KEY")
+STRIPPED = (
+    "CURFEW_GITHUB_TOKEN",
+    "CURFEW_AWS_ACCESS_KEY_ID",
+    "CURFEW_AWS_SECRET_ACCESS_KEY",
+    "CURFEW_CLOSE",
+)
 
 
 def main():

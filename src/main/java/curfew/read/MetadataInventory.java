@@ -9,6 +9,7 @@ import java.util.Locale;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import curfew.scan.CloseTarget;
 import curfew.scan.RawAccess;
 
 /**
@@ -22,6 +23,10 @@ public final class MetadataInventory {
     }
 
     public static List<RawAccess> hooks(String body, Instant now) {
+        return hooks(body, now, null);
+    }
+
+    public static List<RawAccess> hooks(String body, Instant now, String repo) {
         List<RawAccess> rows = new ArrayList<>();
         for (JsonNode node : array(body)) {
             int id = node.path("id").asInt();
@@ -36,12 +41,17 @@ public final class MetadataInventory {
                     "GitHub",
                     age(node.path("created_at").asText(""), now),
                     null,
-                    events > 3));
+                    events > 3,
+                    destination("hooks", repo, Integer.toString(id))));
         }
         return rows;
     }
 
     public static List<RawAccess> secretNames(String body, Instant now) {
+        return secretNames(body, now, null);
+    }
+
+    public static List<RawAccess> secretNames(String body, Instant now, String repo) {
         List<RawAccess> rows = new ArrayList<>();
         JsonNode secrets = root(body).path("secrets");
         if (!secrets.isArray()) {
@@ -59,12 +69,17 @@ public final class MetadataInventory {
                     "GitHub",
                     age(node.path("created_at").asText(""), now),
                     name,
-                    false));
+                    false,
+                    destination("secrets", repo, name)));
         }
         return rows;
     }
 
     public static List<RawAccess> deployKeys(String body, Instant now) {
+        return deployKeys(body, now, null);
+    }
+
+    public static List<RawAccess> deployKeys(String body, Instant now, String repo) {
         List<RawAccess> rows = new ArrayList<>();
         for (JsonNode node : array(body)) {
             int id = node.path("id").asInt();
@@ -79,7 +94,8 @@ public final class MetadataInventory {
                     "GitHub",
                     age(node.path("created_at").asText(""), now),
                     title.isBlank() ? null : title,
-                    !node.path("read_only").asBoolean(true)));
+                    !node.path("read_only").asBoolean(true),
+                    destination("keys", repo, Integer.toString(id))));
         }
         return rows;
     }
@@ -103,7 +119,8 @@ public final class MetadataInventory {
                     "AWS",
                     age(node.path("CreateDate").asText(""), now),
                     owner.isBlank() ? null : owner,
-                    false));
+                    false,
+                    null));
         }
         return rows;
     }
@@ -115,8 +132,20 @@ public final class MetadataInventory {
             String system,
             int ageDays,
             String owner,
-            boolean wideScope) {
-        return new RawAccess(id, kind, kindLabel, system, ageDays, null, owner, wideScope, false);
+            boolean wideScope,
+            String target) {
+        return new RawAccess(id, kind, kindLabel, system, ageDays, null, owner, wideScope, false, target);
+    }
+
+    private static String destination(String kind, String repo, String name) {
+        if (repo == null || !repo.matches("[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+")) {
+            return null;
+        }
+        if (name == null || !name.matches("[A-Za-z0-9_.-]+")) {
+            return null;
+        }
+        String target = kind + "/" + repo + "/" + name;
+        return CloseTarget.safe(target) ? target : null;
     }
 
     private static Iterable<JsonNode> array(String body) {

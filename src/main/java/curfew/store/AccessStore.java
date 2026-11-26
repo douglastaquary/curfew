@@ -17,4 +17,10 @@ public interface AccessStore {
     void remember(HumanDecision decision);
 
     List<HumanDecision> decisions();
+
+    void forgetDecisions();
+
+    void rememberTarget(String id, String target);
+
+    Optional<String> target(String id);
 }

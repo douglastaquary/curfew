@@ -61,10 +61,10 @@ public final class LiveAccessSource implements AccessSource {
                 .build();
         List<RawAccess> rows = new ArrayList<>();
         for (String repo : repoNames(client)) {
-            rows.addAll(MetadataInventory.hooks(get(client, "https://api.github.com/repos/" + repo + "/hooks"), now));
+            rows.addAll(MetadataInventory.hooks(get(client, "https://api.github.com/repos/" + repo + "/hooks"), now, repo));
             rows.addAll(MetadataInventory.secretNames(
-                    get(client, "https://api.github.com/repos/" + repo + "/actions/secrets"), now));
-            rows.addAll(MetadataInventory.deployKeys(get(client, "https://api.github.com/repos/" + repo + "/keys"), now));
+                    get(client, "https://api.github.com/repos/" + repo + "/actions/secrets"), now, repo));
+            rows.addAll(MetadataInventory.deployKeys(get(client, "https://api.github.com/repos/" + repo + "/keys"), now, repo));
         }
         return rows;
     }

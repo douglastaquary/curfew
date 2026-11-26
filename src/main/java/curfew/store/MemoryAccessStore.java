@@ -3,8 +3,10 @@ package curfew.store;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import curfew.scan.CloseTarget;
 import curfew.scan.ClassifiedAccess;
 import curfew.scan.HumanDecision;
 import curfew.scan.MockAccessSource;
@@ -19,6 +21,7 @@ public class MemoryAccessStore implements AccessStore {
 
     private final List<ClassifiedAccess> items = new CopyOnWriteArrayList<>();
     private final List<HumanDecision> decisions = new CopyOnWriteArrayList<>();
+    private final ConcurrentHashMap<String, String> targets = new ConcurrentHashMap<>();
 
     public MemoryAccessStore() {
         replace(new ScanEngine(4).classifyAll(new MockAccessSource().list(), new ScanRules()));
@@ -48,5 +51,22 @@ public class MemoryAccessStore implements AccessStore {
     @Override
     public List<HumanDecision> decisions() {
         return List.copyOf(decisions);
+    }
+
+    @Override
+    public void forgetDecisions() {
+        decisions.clear();
+    }
+
+    @Override
+    public void rememberTarget(String id, String target) {
+        if (id != null && CloseTarget.safe(target)) {
+            targets.put(id, target);
+        }
+    }
+
+    @Override
+    public Optional<String> target(String id) {
+        return Optional.ofNullable(targets.get(id));
     }
 }

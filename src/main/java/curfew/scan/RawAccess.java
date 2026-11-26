@@ -12,5 +12,19 @@ public record RawAccess(
         Integer lastUsedDays,
         String owner,
         boolean wideScope,
-        boolean maybeProduction) {
+        boolean maybeProduction,
+        String target) {
+
+    public RawAccess(
+            String id,
+            String kind,
+            String kindLabel,
+            String system,
+            int ageDays,
+            Integer lastUsedDays,
+            String owner,
+            boolean wideScope,
+            boolean maybeProduction) {
+        this(id, kind, kindLabel, system, ageDays, lastUsedDays, owner, wideScope, maybeProduction, null);
+    }
 }

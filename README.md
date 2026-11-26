@@ -70,7 +70,7 @@ O comando sobe uma instância sem as variáveis de conta, confere a varredura do
 
 Um plano de várias mudanças só segue depois que `python3 .cursor/skills/verify-curfew/verify-curfew.py plan <arquivo>` aceita o arquivo. Cada item precisa de prova no ar. Deploy e fechamento de acesso são recusados. Apague o plano quando o corte fechar. Rascunho de tela fica em `scratch/` e não entra no código.
 
-A passagem da noite aparece em `/varredura`. Ela anota a ação de cada acesso e pede um humano quando o acesso pode ser de produção. Não chama GitHub nem AWS para apagar.
+A passagem da noite aparece em `/varredura`. O botão tira da fila o que não pede humano. A conta não é chamada. Para apagar webhook, chave de deploy e nome de segredo no GitHub, exporte `CURFEW_CLOSE=sim` junto com `CURFEW_GITHUB_TOKEN`. Produção continua de fora. O identificador completo de chave AWS não é guardado, então essa chave não é apagada por aqui.
 
 `./mvnw package` gera `target/function.zip`. Gerar o zip não publica nada. Não rode `sam deploy` neste corte.
 
@@ -92,4 +92,4 @@ O log ao vivo sai de `GET /varredura/eventos`. Cada linha leva sistema, idade, d
 
 Em dev e teste a fila fica na memória. O perfil de produção usa DynamoDB, tabela `curfew-access`, em `template.yaml`. Não há campo para o valor de um segredo.
 
-Para um agente, `.cursor/skills/curfew/SKILL.md` e `AGENTS.md` repetem o limite deste corte: sem conector, sem credencial de cliente, sem deploy e sem fechar acesso até um sim explícito. Os playbooks da poteto-mode estão no plugin `plugins/pstack`.
+Para um agente, `.cursor/skills/curfew/SKILL.md` e `AGENTS.md` repetem o limite deste corte: sem conector, sem credencial de cliente, sem deploy e sem `CURFEW_CLOSE` até um sim explícito. Os playbooks da poteto-mode estão no plugin `plugins/pstack`.

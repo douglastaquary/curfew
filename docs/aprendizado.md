@@ -21,3 +21,5 @@ Cada linha cita um teste que trava a correção. `LearningLedgerTest` falha se a
 | O dry-run da verificação não sobe o app nem imprime segredo | `VerifyCurfewTest.dryRunDoesNotStartTheAppOrPrintASecret` |
 | O plano exige prova no ar e recusa deploy ou fechamento | `VerifyCurfewTest.planRequiresLiveProofAndRejectsDeploy` |
 | A passagem da noite pede um humano na produção e não fecha nada | `NightlyCloseTest.productionAsksAndNothingCloses` |
+| A passagem desarmada tira a fila local e não chama a conta | `NightPageTest.passageRemovesLocalRowsAndDoesNotCallTheAccount` |
+| O token do GitHub não entra na URL de exclusão | `GithubCloseTest.tokenStaysOutOfTheUrl` |

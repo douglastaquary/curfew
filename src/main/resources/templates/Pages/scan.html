@@ -37,7 +37,14 @@
             <ol id="scan-log" class="log" data-live="true" aria-live="polite" aria-relevant="additions"></ol>
             <p class="footnote">Cada linha chega quando a regra termina aquele acesso. Horário de Brasília. Nada é fechado.</p>
             <h2>Passagem da noite</h2>
-            <p>A noite anota a ação de cada acesso. Produção pede um humano. Nada é fechado.</p>
+            {#if passage}
+                <p class="banner" role="status">{passage}</p>
+            {/if}
+            <p>Executar a passagem tira da fila o que não pede humano. A conta só entra com CURFEW_CLOSE=sim.</p>
+            <form method="post" action="/noite">
+                <input type="hidden" name="confirmo" value="sim">
+                <button type="submit">Executar a passagem</button>
+            </form>
             <ul class="connections">
                 {#for note in notes}
                     <li><strong>{note.id}</strong><span>{note.action}</span></li>

@@ -31,7 +31,12 @@ public class Pages {
         public static native TemplateInstance missing(String nav);
 
         public static native TemplateInstance scan(
-                String nav, String state, TokenReport report, int items, List<NightlyNote> notes);
+                String nav,
+                String state,
+                TokenReport report,
+                int items,
+                List<NightlyNote> notes,
+                String passage);
 
         public static native TemplateInstance connections(String nav, String github, String aws);
     }
@@ -65,12 +70,30 @@ public class Pages {
     @GET
     @Path("varredura")
     @Produces(MediaType.TEXT_HTML)
-    public TemplateInstance scan(@QueryParam("estado") String estado) {
+    public TemplateInstance scan(
+            @QueryParam("estado") String estado,
+            @QueryParam("saidas") String saidas,
+            @QueryParam("perguntados") String perguntados,
+            @QueryParam("conta") String conta) {
         ViewState state = ViewState.from(estado);
         List<NightlyNote> notes = state == ViewState.DATA
                 ? new NightlyClose().note(store.list())
                 : List.of();
-        return Templates.scan("varredura", state.name(), new TokenLedger().report(0), 0, notes);
+        return Templates.scan(
+                "varredura", state.name(), new TokenLedger().report(0), 0, notes, passage(saidas, perguntados, conta));
+    }
+
+    private static String passage(String saidas, String perguntados, String conta) {
+        if (saidas == null || !saidas.matches("\\d+") || perguntados == null || !perguntados.matches("\\d+")) {
+            return "";
+        }
+        String account = "sim".equals(conta)
+                ? "A conta foi chamada."
+                : "nao".equals(conta) ? "A conta não foi chamada." : "";
+        if (account.isEmpty()) {
+            return "";
+        }
+        return saidas + " saíram da fila. " + perguntados + " pedem um humano. " + account;
     }
 
     @GET

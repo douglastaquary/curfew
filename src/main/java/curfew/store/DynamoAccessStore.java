@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import curfew.scan.CloseTarget;
 import curfew.scan.ClassifiedAccess;
 import curfew.scan.HumanDecision;
 import io.quarkus.arc.profile.IfBuildProfile;
@@ -15,6 +17,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.DeleteItemRequest;
 import software.amazon.awssdk.services.dynamodb.model.GetItemRequest;
 import software.amazon.awssdk.services.dynamodb.model.PutItemRequest;
 import software.amazon.awssdk.services.dynamodb.model.ScanRequest;
@@ -31,6 +34,7 @@ public class DynamoAccessStore implements AccessStore {
 
     private final DynamoDbClient dynamo;
     private final String table;
+    private final ConcurrentHashMap<String, String> targets = new ConcurrentHashMap<>();
 
     @Inject
     public DynamoAccessStore(DynamoDbClient dynamo, @ConfigProperty(name = "curfew.table-name") String table) {
@@ -89,6 +93,32 @@ public class DynamoAccessStore implements AccessStore {
             }
         }
         return List.copyOf(found);
+    }
+
+    @Override
+    public void forgetDecisions() {
+        var response = dynamo.scan(ScanRequest.builder().tableName(table).build());
+        for (Map<String, AttributeValue> item : response.items()) {
+            String id = text(item, "id");
+            if (id.startsWith(DECISION_PREFIX)) {
+                dynamo.deleteItem(DeleteItemRequest.builder()
+                        .tableName(table)
+                        .key(Map.of("id", AttributeValue.fromS(id)))
+                        .build());
+            }
+        }
+    }
+
+    @Override
+    public void rememberTarget(String id, String target) {
+        if (id != null && CloseTarget.safe(target)) {
+            targets.put(id, target);
+        }
+    }
+
+    @Override
+    public Optional<String> target(String id) {
+        return Optional.ofNullable(targets.get(id));
     }
 
     private Map<String, AttributeValue> toAccess(ClassifiedAccess item) {

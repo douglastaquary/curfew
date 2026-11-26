@@ -2,12 +2,16 @@ package curfew.read;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import curfew.scan.AccessSource;
+import curfew.scan.HumanDecision;
 import curfew.scan.MockAccessSource;
 import curfew.scan.RawAccess;
+import curfew.store.AccessStore;
 import jakarta.enterprise.context.ApplicationScoped;
 
 /**
@@ -22,17 +26,23 @@ public class ReadCoordinator implements AccessSource {
     static final String AWS_SECRET = "CURFEW_AWS_SECRET_ACCESS_KEY";
 
     private final String mode;
+    private final AccessStore store;
 
-    public ReadCoordinator(@ConfigProperty(name = "curfew.read.mode") String mode) {
+    public ReadCoordinator(AccessStore store, @ConfigProperty(name = "curfew.read.mode") String mode) {
+        this.store = store;
         this.mode = mode;
     }
 
     @Override
     public List<RawAccess> list() {
-        if (!live()) {
-            return new MockAccessSource().list();
-        }
-        return new LiveAccessSource(env(GITHUB), env(AWS_ID), env(AWS_SECRET), Instant.now()).list();
+        List<RawAccess> rows = live()
+                ? new LiveAccessSource(env(GITHUB), env(AWS_ID), env(AWS_SECRET), Instant.now()).list()
+                : new MockAccessSource().list();
+        Set<String> hidden = store.decisions().stream()
+                .filter(decision -> "anotado".equals(decision.choice()) || "fechado".equals(decision.choice()))
+                .map(HumanDecision::accessId)
+                .collect(Collectors.toSet());
+        return rows.stream().filter(row -> !hidden.contains(row.id())).toList();
     }
 
     public boolean githubLinked() {
