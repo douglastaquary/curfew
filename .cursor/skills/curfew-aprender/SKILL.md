@@ -11,7 +11,7 @@ Não abra a fábrica: vários agentes, merge sozinho ou varredura a cada release
 
 ## Referência poteto-mode
 
-A fonte é a skill [poteto-mode](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/SKILL.md), do plugin pstack. O plugin inteiro não está neste repositório. Vale o que dá para travar aqui.
+O plugin está em `plugins/pstack`, com a licença MIT de Lauren Tan. A skill é `plugins/pstack/skills/poteto-mode/SKILL.md` e os playbooks estão em `plugins/pstack/skills/poteto-mode/playbooks/`. O Cursor carrega esse diretório ao abrir o projeto. As mesmas skills também aparecem em `.cursor/skills`.
 
 - Laziness Protocol e Subtract Before You Add. A menor mudança. Apague o peso morto antes de acrescentar.
 - Encode Lessons in Structure. A segunda vez que a mesma instrução aparece, ela vai para um teste, não para mais texto.
@@ -22,7 +22,7 @@ A fonte é a skill [poteto-mode](https://github.com/cursor/plugins/blob/main/pst
 - Never Block on the Human para trabalho reversível. Pare em `sam deploy`, apagar dado e fechar acesso.
 - No is an acceptable answer. Se o pedido sai do corte, diga isso.
 
-Ficam de fora o roteamento de modelos, swarm, arena, `/deslop` e o merge automático. Esses playbooks dependem do plugin, que não está instalado.
+Quando um playbook e o limite da Curfew discordam, o limite ganha. Não rode `sam deploy`, não feche acesso e não grave credencial de cliente. O merge automático dos playbooks de fábrica continua fechado até um sim explícito.
 
 ## Mapa
 

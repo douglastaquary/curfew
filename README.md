@@ -78,4 +78,4 @@ O log ao vivo sai de `GET /varredura/eventos`. Cada linha leva sistema, idade, d
 
 Em dev e teste a fila fica na memória. O perfil de produção usa DynamoDB, tabela `curfew-access`, em `template.yaml`. Não há campo para o valor de um segredo.
 
-Para um agente, `.cursor/skills/curfew/SKILL.md` e `AGENTS.md` repetem o limite deste corte: sem conector, sem credencial de cliente, sem deploy e sem fechar acesso até um sim explícito.
+Para um agente, `.cursor/skills/curfew/SKILL.md` e `AGENTS.md` repetem o limite deste corte: sem conector, sem credencial de cliente, sem deploy e sem fechar acesso até um sim explícito. Os playbooks da poteto-mode estão no plugin `plugins/pstack`.
