@@ -1,6 +1,6 @@
 # Agentes neste repositório
 
-O corte atual é a fila. Sem variável de leitura, ela é o exemplo. Com `CURFEW_GITHUB_TOKEN` ou o par `CURFEW_AWS_ACCESS_KEY_ID` e `CURFEW_AWS_SECRET_ACCESS_KEY`, a varredura lista metadado e descarta o valor do segredo. Não avance para fechamento, modelo ou deploy sem um sim de quem mantém o projeto.
+O corte atual é a fila e a passagem da noite. A noite anota a ação e pede um humano quando o acesso pode ser de produção. Sem variável de leitura, a fila é o exemplo. Com `CURFEW_GITHUB_TOKEN` ou o par `CURFEW_AWS_ACCESS_KEY_ID` e `CURFEW_AWS_SECRET_ACCESS_KEY`, a varredura lista metadado e descarta o valor do segredo. Não avance para modelo ou deploy, e não feche, revogue ou apague um acesso, sem um sim que diga isso.
 
 Correção vira teste. O ciclo de desenvolver, corrigir, publicar e aprender está em `.cursor/skills/curfew-aprender/SKILL.md`. O plugin pstack está em `plugins/pstack`. Os playbooks estão em `plugins/pstack/skills/poteto-mode/playbooks/`. Quando um playbook e o limite deste corte discordam, o limite ganha. Cada ajuste em `docs/aprendizado.md` cita um método que `LearningLedgerTest` confere. A fábrica de agentes, com merge sozinho ou varredura a cada release, continua fechada.
 

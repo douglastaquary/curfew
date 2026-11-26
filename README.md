@@ -70,6 +70,8 @@ O comando sobe uma instância sem as variáveis de conta, confere a varredura do
 
 Um plano de várias mudanças só segue depois que `python3 .cursor/skills/verify-curfew/verify-curfew.py plan <arquivo>` aceita o arquivo. Cada item precisa de prova no ar. Deploy e fechamento de acesso são recusados. Apague o plano quando o corte fechar. Rascunho de tela fica em `scratch/` e não entra no código.
 
+A passagem da noite aparece em `/varredura`. Ela anota a ação de cada acesso e pede um humano quando o acesso pode ser de produção. Não chama GitHub nem AWS para apagar.
+
 `./mvnw package` gera `target/function.zip`. Gerar o zip não publica nada. Não rode `sam deploy` neste corte.
 
 ## Erros comuns

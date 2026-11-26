@@ -28,6 +28,7 @@ Abra `http://127.0.0.1:8473/`. Estados da fila: `/?estado=vazio`, `/?estado=carr
 - Teto de concorrência: `ScanEngine`
 - Tokens evitados: `TokenLedger` (o contador de chamadas de modelo permanece zero)
 - Log ao vivo: `GET /varredura/eventos`. Cada linha leva sistema, idade, dono e ação. Sem segredo.
+- Passagem da noite: `NightlyClose`. Anota a ação. Produção pede um humano. Não chama GitHub nem AWS para apagar.
 - Prova no ar: `python3 .cursor/skills/verify-curfew/verify-curfew.py prove`. O comando sobe a instância, lê a varredura e guarda o print.
 - Telas: `src/main/resources/templates/Pages/` e `src/main/resources/META-INF/resources/app.css`
 - Filtro no navegador: `app.js`. O log da varredura lê `GET /varredura/eventos`.

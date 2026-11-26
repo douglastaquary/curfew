@@ -35,8 +35,12 @@ class QueuePageTest {
         given().when().get("/acessos/nao-existe").then().statusCode(404);
         String scan = body("/varredura");
         assertTrue(scan.contains("Acompanhamento"));
+        assertTrue(scan.contains("Passagem da noite"));
+        assertTrue(scan.contains("gh-token-18"));
+        assertTrue(scan.contains("Trancar e pedir um humano"));
         assertTrue(scan.contains("id=\"scan-log\""));
         assertTrue(scan.contains(">0<"));
+        assertFalse(body("/varredura?estado=vazio").contains("Passagem da noite"));
         assertTrue(body("/conexoes").contains("Leitura ainda não ligada"));
     }
 

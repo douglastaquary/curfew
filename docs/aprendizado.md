@@ -20,3 +20,4 @@ Cada linha cita um teste que trava a correção. `LearningLedgerTest` falha se a
 | O mapa de verificação cobre as quatro telas | `VerifyCurfewTest.featureMapKeepsTheFourScreens` |
 | O dry-run da verificação não sobe o app nem imprime segredo | `VerifyCurfewTest.dryRunDoesNotStartTheAppOrPrintASecret` |
 | O plano exige prova no ar e recusa deploy ou fechamento | `VerifyCurfewTest.planRequiresLiveProofAndRejectsDeploy` |
+| A passagem da noite pede um humano na produção e não fecha nada | `NightlyCloseTest.productionAsksAndNothingCloses` |

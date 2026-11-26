@@ -7,6 +7,7 @@ A varredura acompanha a leitura. O HTML abre com contadores em zero. As linhas c
 - `varredura-pagina`: título, acompanhamento e contadores iniciais em zero.
 - `varredura-fluxo`: cada acesso vira uma linha e o fim declara que nada foi fechado.
 - `varredura-print`: o arquivo em `artifacts/` mostra a tela.
+- `varredura-noite`: a passagem anota a ação. Produção pede um humano. Nada é fechado.
 
 ## How to get to it (user POV)
 
@@ -20,7 +21,8 @@ Preconditions:
 - `doctor` devolve `"h1": "Fila"`.
 - A instância é o exemplo. Conta real não entra neste processo.
 
-- **Página.** Abra a varredura. Rode `python3 .cursor/skills/verify-curfew/verify-curfew.py get /varredura`. Status 200, h1 `Varredura`, marcador `Acompanhamento`.
+- **Página.** Abra a varredura. Rode `python3 .cursor/skills/verify-curfew/verify-curfew.py get /varredura`. Status 200, h1 `Varredura`, marcadores `Acompanhamento` e `Passagem da noite`.
+- **Noite vazia.** Abra a varredura vazia. Rode `python3 .cursor/skills/verify-curfew/verify-curfew.py get '/varredura?estado=vazio'`. Status 200, sem o marcador `Passagem da noite`.
 - **Fluxo.** Leia até o fim. Rode `python3 .cursor/skills/verify-curfew/verify-curfew.py log`. `done` é `6 6 0 720`, com início, Revogar e nada fechado. `secret` false.
 - **Print.** Grave a tela. Rode `python3 .cursor/skills/verify-curfew/verify-curfew.py screenshot /varredura`. O JSON traz o caminho em `artifacts/varredura.png` e o arquivo continua lá depois de `down`.
 

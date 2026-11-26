@@ -36,6 +36,13 @@
         {#else}
             <ol id="scan-log" class="log" data-live="true" aria-live="polite" aria-relevant="additions"></ol>
             <p class="footnote">Cada linha chega quando a regra termina aquele acesso. Horário de Brasília. Nada é fechado.</p>
+            <h2>Passagem da noite</h2>
+            <p>A noite anota a ação de cada acesso. Produção pede um humano. Nada é fechado.</p>
+            <ul class="connections">
+                {#for note in notes}
+                    <li><strong>{note.id}</strong><span>{note.action}</span></li>
+                {/for}
+            </ul>
         {/if}
     {/if}
 {/body}

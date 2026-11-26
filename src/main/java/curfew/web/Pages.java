@@ -4,6 +4,8 @@ import java.util.List;
 
 import curfew.read.ReadCoordinator;
 import curfew.scan.ClassifiedAccess;
+import curfew.scan.NightlyClose;
+import curfew.scan.NightlyNote;
 import curfew.scan.TokenLedger;
 import curfew.scan.TokenReport;
 import curfew.store.AccessStore;
@@ -28,7 +30,8 @@ public class Pages {
 
         public static native TemplateInstance missing(String nav);
 
-        public static native TemplateInstance scan(String nav, String state, TokenReport report, int items);
+        public static native TemplateInstance scan(
+                String nav, String state, TokenReport report, int items, List<NightlyNote> notes);
 
         public static native TemplateInstance connections(String nav, String github, String aws);
     }
@@ -64,7 +67,10 @@ public class Pages {
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance scan(@QueryParam("estado") String estado) {
         ViewState state = ViewState.from(estado);
-        return Templates.scan("varredura", state.name(), new TokenLedger().report(0), 0);
+        List<NightlyNote> notes = state == ViewState.DATA
+                ? new NightlyClose().note(store.list())
+                : List.of();
+        return Templates.scan("varredura", state.name(), new TokenLedger().report(0), 0, notes);
     }
 
     @GET

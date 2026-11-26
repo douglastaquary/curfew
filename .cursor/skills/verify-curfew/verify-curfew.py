@@ -28,6 +28,7 @@ MARKERS = (
     "Nada foi fechado",
     "Leitura ainda não ligada",
     "Acompanhamento",
+    "Passagem da noite",
     "Trancar e pedir um humano",
 )
 STRIPPED = ("CURFEW_GITHUB_TOKEN", "CURFEW_AWS_ACCESS_KEY_ID", "CURFEW_AWS_SECRET_ACCESS_KEY")
@@ -242,7 +243,7 @@ def cmd_screenshot(path):
         "--disable-gpu",
         "--no-sandbox",
         "--hide-scrollbars",
-        "--window-size=1280,900",
+        "--window-size=1280,1600",
         "--virtual-time-budget=12000",
         f"--screenshot={target}",
         URL + path,
