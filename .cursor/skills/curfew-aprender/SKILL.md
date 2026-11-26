@@ -9,6 +9,21 @@ O limite do produto continua em `.cursor/skills/curfew/SKILL.md`. Esta skill é 
 
 Não abra a fábrica: vários agentes, merge sozinho ou varredura a cada release. Esse passo espera o ciclo abaixo acertar sozinho.
 
+## Referência poteto-mode
+
+A fonte é a skill [poteto-mode](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/SKILL.md), do plugin pstack. O plugin inteiro não está neste repositório. Vale o que dá para travar aqui.
+
+- Laziness Protocol e Subtract Before You Add. A menor mudança. Apague o peso morto antes de acrescentar.
+- Encode Lessons in Structure. A segunda vez que a mesma instrução aparece, ela vai para um teste, não para mais texto.
+- Prove It Works e Test Behavior, Not Implementation. O teste olha o que a página ou o evento mostram.
+- Fix Root Causes. O conserto é na primeira causa, não num comentário em volta.
+- Sequence Work into Verifiable Units. Cada passo termina em `./mvnw test` ou na rota no ar antes do próximo.
+- Build the Lever. `LearningLedgerTest` é a ferramenta que o próximo agente roda de novo.
+- Never Block on the Human para trabalho reversível. Pare em `sam deploy`, apagar dado e fechar acesso.
+- No is an acceptable answer. Se o pedido sai do corte, diga isso.
+
+Ficam de fora o roteamento de modelos, swarm, arena, `/deslop` e o merge automático. Esses playbooks dependem do plugin, que não está instalado.
+
 ## Mapa
 
 Quem usa a aplicação encontra isto:
@@ -21,7 +36,7 @@ Quem usa a aplicação encontra isto:
 
 ## Desenvolver
 
-1. Leia o mapa e mude a menor superfície que cumpre o pedido.
+1. Diga o objetivo e a menor mudança que o cumpre. Nomeie o dado antes do código. Os tipos de hoje são `RawAccess` e `ClassifiedAccess`. Faça só essa mudança.
 2. Rode `./mvnw test`.
 3. Se a tela mudou, suba `./mvnw quarkus:dev` na porta 8473 e percorra a rota do mapa. Confira vazio, carregando e erro quando a fila mudar.
 

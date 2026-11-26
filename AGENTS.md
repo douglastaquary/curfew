@@ -2,7 +2,7 @@
 
 O corte atual é a fila fictícia. Não avance para o próximo corte sem um sim de quem mantém o projeto.
 
-Correção vira teste. O ciclo de desenvolver, corrigir, publicar e aprender está em `.cursor/skills/curfew-aprender/SKILL.md`. Cada ajuste em `docs/aprendizado.md` cita um método que `LearningLedgerTest` confere. A fábrica de agentes, com merge sozinho ou varredura a cada release, continua fechada.
+Correção vira teste. O ciclo de desenvolver, corrigir, publicar e aprender está em `.cursor/skills/curfew-aprender/SKILL.md`. As regras aplicáveis da skill poteto-mode estão nessa mesma página. Cada ajuste em `docs/aprendizado.md` cita um método que `LearningLedgerTest` confere. A fábrica de agentes, com merge sozinho ou varredura a cada release, continua fechada.
 
 Fora deste corte, até esse sim:
 
