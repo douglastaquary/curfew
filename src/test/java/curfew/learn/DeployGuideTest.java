@@ -48,7 +48,8 @@ class DeployGuideTest {
         String skill = Files.readString(Path.of(".cursor/skills/curfew-deploy/SKILL.md"));
 
         assertTrue(guide.contains("No module named 'pygments'"));
-        assertTrue(guide.contains("python3.12 -m pip install pygments"));
+        assertTrue(guide.contains("python3.12 -m pip install --break-system-packages pygments"));
+        assertTrue(guide.contains("externally-managed-environment"));
         assertTrue(guide.contains("não rode `brew reinstall aws-sam-cli`"));
         assertTrue(skill.contains("No module named 'pygments'"));
         assertTrue(skill.contains("não rode `brew reinstall aws-sam-cli`"));

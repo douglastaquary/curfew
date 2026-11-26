@@ -33,11 +33,11 @@ Se `generate-code` falhar com `NoSuchElementException`, é esse JDK antigo. Não
 Antes do deploy, `sam --version` precisa imprimir a versão. Se aparecer `No module named 'pygments'`, o CLI foi instalado sem essa biblioteca. No Mac, com o Python 3.12 de `/usr/local`:
 
 ```bash
-python3.12 -m pip install pygments
+python3.12 -m pip install --break-system-packages pygments
 sam --version
 ```
 
-No macOS 12, não rode `brew reinstall aws-sam-cli`. O Homebrew responde que as Command Line Tools não suportam esse sistema. Não apague `/Library/Developer/CommandLineTools`. O pacote oficial do SAM também não cobre macOS anterior ao 13.
+Se o `pip` responder `externally-managed-environment`, esse é o motivo da flag. Não crie um `venv`: o `sam` de `/usr/local/bin/sam` não entra nele. No macOS 12, não rode `brew reinstall aws-sam-cli`. O Homebrew responde que as Command Line Tools não suportam esse sistema. Não apague `/Library/Developer/CommandLineTools`. O pacote oficial do SAM também não cobre macOS anterior ao 13.
 
 ```bash
 ./mvnw -q package
@@ -68,5 +68,6 @@ O zip é `target/function.zip`. Gerar o zip não publica.
 | 26 nov 2026, 08:25, Brasília | `./mvnw -version` mostrou Java 17.0.14, runtime `jbr-17` | É o JDK do IntelliJ. Instale o Temurin 21 e exporte o `JAVA_HOME` para ele. |
 | 26 nov 2026, 08:34, Brasília | `sam` morreu com `No module named 'pygments'` | O CLI está no Python 3.12 de `/usr/local` sem essa biblioteca. `python3.12 -m pip install pygments` e depois `sam --version`. |
 | 26 nov 2026, 08:39, Brasília | `brew reinstall aws-sam-cli` disse que as Command Line Tools não suportam macOS 12 | Não reinstale por aí e não apague as ferramentas. O `sam` já existe. Falta o `pygments`. |
+| 26 nov 2026, 08:42, Brasília | `python3.12 -m pip install pygments` respondeu `externally-managed-environment` | Esse Python é do Homebrew. Use `--break-system-packages`. Um venv não alcança o `sam` já instalado. |
 
 Não cole a access key no chat. A skill que o próximo agente segue é `.cursor/skills/curfew-deploy/SKILL.md`.
