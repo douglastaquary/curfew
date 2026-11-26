@@ -52,6 +52,9 @@ class DeployGuideTest {
         assertTrue(guide.contains("externally-managed-environment"));
         assertTrue(guide.contains("não rode `brew reinstall aws-sam-cli`"));
         assertTrue(guide.contains("SAM CLI, version 1.132.0"));
+        assertTrue(guide.contains("https://f3nqvezln1.execute-api.us-east-1.amazonaws.com"));
+        assertTrue(guide.contains("Internal Server Error"));
+        assertTrue(skill.contains("sam logs -n CurfewFunction --stack-name curfew --region us-east-1"));
         assertTrue(skill.contains("No module named 'pygments'"));
         assertTrue(skill.contains("não rode `brew reinstall aws-sam-cli`"));
     }

@@ -38,7 +38,13 @@ sam deploy \
 
 Não defina `CURFEW_CLOSE` nem `CURFEW_ISSUE`.
 
-A saída `ApiUrl` abre em `/porta`. Token de GitHub e o par de leitura AWS entram depois, no ambiente da função, não no template.
+A saída `ApiUrl` abre em `/porta`. A stack já criada está em `https://f3nqvezln1.execute-api.us-east-1.amazonaws.com`. Se a resposta for `Internal Server Error`, não faça outro deploy. Leia o log:
+
+```bash
+sam logs -n CurfewFunction --stack-name curfew --region us-east-1 -s '30min ago'
+```
+
+Token de GitHub e o par de leitura AWS entram depois, no ambiente da função, não no template. Não atualize o SAM 1.132.0 neste Mac.
 
 ## Aprender
 
