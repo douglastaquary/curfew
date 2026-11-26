@@ -20,7 +20,8 @@ class TokenLedgerTest {
 
     @Test
     void recordsHaveNoSecretField() {
-        List<Class<?>> types = List.of(RawAccess.class, ClassifiedAccess.class, HumanDecision.class);
+        List<Class<?>> types = List.of(
+                RawAccess.class, ClassifiedAccess.class, HumanDecision.class, ReadingNote.class);
         for (Class<?> type : types) {
             for (var component : type.getRecordComponents()) {
                 String name = component.getName().toLowerCase();

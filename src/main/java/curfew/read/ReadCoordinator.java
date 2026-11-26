@@ -15,8 +15,8 @@ import curfew.store.AccessStore;
 import jakarta.enterprise.context.ApplicationScoped;
 
 /**
- * Sem variável, a fila continua o exemplo. Com variável, a varredura lê de verdade.
- * O valor fica no ambiente. Não entra em propriedade, log ou fila.
+ * Sem variável, a fila fica vazia. Com variável, a varredura lê de verdade.
+ * O perfil de teste usa o mock. O valor fica no ambiente.
  */
 @ApplicationScoped
 public class ReadCoordinator implements AccessSource {
@@ -35,9 +35,7 @@ public class ReadCoordinator implements AccessSource {
 
     @Override
     public List<RawAccess> list() {
-        List<RawAccess> rows = live()
-                ? new LiveAccessSource(env(GITHUB), env(AWS_ID), env(AWS_SECRET), Instant.now()).list()
-                : new MockAccessSource().list();
+        List<RawAccess> rows = source();
         Set<String> hidden = store.decisions().stream()
                 .filter(decision -> "anotado".equals(decision.choice()) || "fechado".equals(decision.choice()))
                 .map(HumanDecision::accessId)
@@ -63,6 +61,16 @@ public class ReadCoordinator implements AccessSource {
         return awsLinked()
                 ? "Leitura ligada. Entram chaves ativas, com os quatro últimos caracteres."
                 : "Leitura ainda não ligada";
+    }
+
+    private List<RawAccess> source() {
+        if (live()) {
+            return new LiveAccessSource(env(GITHUB), env(AWS_ID), env(AWS_SECRET), Instant.now()).list();
+        }
+        if ("mock".equals(mode)) {
+            return new MockAccessSource().list();
+        }
+        return List.of();
     }
 
     private boolean live() {

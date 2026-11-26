@@ -1,6 +1,6 @@
 ---
 name: curfew
-description: Trabalhar no repositório Curfew sem sair do corte aprovado. Use quando for subir a aplicação, alterar a fila fictícia, as regras de varredura ou os templates.
+description: Trabalhar no repositório Curfew sem sair do corte aprovado. Use quando for subir a aplicação, alterar a fila, as regras de varredura ou os templates.
 ---
 
 # Curfew
@@ -25,7 +25,7 @@ O limite da chave e da noite, que os exemplos não percorrem inteiro, é `./mvnw
 
 ## Onde mexer
 
-- Fila fictícia: `src/main/java/curfew/scan/MockAccessSource.java`
+- Fila de teste: `src/main/java/curfew/scan/MockAccessSource.java`. A aplicação sem variável começa vazia.
 - Regras: `src/main/java/curfew/scan/ScanRules.java`
 - Teto de concorrência: `ScanEngine`
 - Tokens evitados: `TokenLedger` (o contador de chamadas de modelo permanece zero)
@@ -40,7 +40,7 @@ O limite da chave e da noite, que os exemplos não percorrem inteiro, é `./mvnw
 
 O push vai para o GitHub, `douglastaquary/curfew`. Não envie este projeto para o repositório do Cursor.
 
-A leitura real está em `curfew.read`. Sem variável, a fila continua o exemplo. Com `CURFEW_GITHUB_TOKEN` ou o par `CURFEW_AWS_ACCESS_KEY_ID` e `CURFEW_AWS_SECRET_ACCESS_KEY`, a varredura lê webhook, nome de segredo, chave de deploy e chaves IAM ativas. O valor não entra na fila. O perfil de teste força `curfew.read.mode=mock`.
+A leitura real está em `curfew.read`. Sem variável, a fila fica vazia. Com `CURFEW_GITHUB_TOKEN` ou o par `CURFEW_AWS_ACCESS_KEY_ID` e `CURFEW_AWS_SECRET_ACCESS_KEY`, a varredura lê webhook, nome de segredo, chave de deploy e chaves IAM ativas. O valor não entra na fila. O perfil de teste força `curfew.read.mode=mock`. Uma instalação por cliente. Sem login. A contagem fica em `/contagem`.
 
 ## Parar
 

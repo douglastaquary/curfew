@@ -53,7 +53,7 @@ O que aparece de CI são os nomes dos secrets de GitHub Actions nos cinco reposi
 
 Onde a Curfew roda, as três variáveis acima ficam no ambiente do processo.
 
-- Máquina local: exporte no shell que executa `./mvnw quarkus:dev`. Sem as variáveis, a fila é o exemplo.
+- Máquina local: exporte no shell que executa `./mvnw quarkus:dev`. Sem as variáveis, a fila fica vazia.
 - Função publicada: Configuration, Environment variables. O template não leva token de cliente.
 
 Abra `/conexoes`. Com a variável presente, a linha diz que a leitura está ligada. Abra `/varredura` para ver o log. Nada é fechado.

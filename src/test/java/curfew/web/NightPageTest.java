@@ -4,6 +4,8 @@ import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import curfew.scan.MockAccessSource;
@@ -22,6 +24,7 @@ class NightPageTest {
     @Test
     void passageRemovesLocalRowsAndDoesNotCallTheAccount() {
         try {
+            store.replace(new ScanEngine(4).classifyAll(new MockAccessSource().list(), new ScanRules()));
             given().formParam("outro", "nao").post("/noite").then().statusCode(400);
             assertTrue(queue().contains("/acessos/gh-token-18"));
 
@@ -45,7 +48,7 @@ class NightPageTest {
             assertFalse(page.contains("AKIA"));
         } finally {
             store.forgetDecisions();
-            store.replace(new ScanEngine(4).classifyAll(new MockAccessSource().list(), new ScanRules()));
+            store.replace(List.of());
         }
     }
 

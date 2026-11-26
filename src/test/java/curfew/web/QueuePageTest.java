@@ -4,20 +4,41 @@ import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Instant;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import curfew.scan.LeaseBook;
+import curfew.store.AccessStore;
 import io.quarkus.test.junit.QuarkusTest;
+import jakarta.inject.Inject;
 
 @QuarkusTest
 class QueuePageTest {
 
+    @Inject
+    AccessStore store;
+
+    @Inject
+    LeaseBook book;
+
+    @BeforeEach
+    void emptyQueue() {
+        store.replace(List.of());
+        store.forgetDecisions();
+        book.reset(Instant.now());
+    }
+
     @Test
-    void queueShowsTheMockAndNoSecret() {
+    void queueStartsEmptyWithNoSecret() {
         String html = given().when().get("/").then().statusCode(200).extract().asString();
 
-        assertTrue(html.contains("Token"));
-        assertTrue(html.contains("Ninguém"));
-        assertTrue(html.contains("Trancar e pedir um humano"));
+        assertTrue(html.contains("Sem isso a fila fica vazia"));
+        assertTrue(html.contains("Conexões"));
+        assertFalse(html.contains("gh-token-18"));
+        assertFalse(html.contains("Abrir o pull request"));
         assertFalse(html.contains("ghp_"));
         assertFalse(html.contains("AKIA"));
     }
@@ -31,6 +52,8 @@ class QueuePageTest {
 
     @Test
     void detailScanAndConnectionsRender() {
+        store.replace(new curfew.scan.ScanEngine(4).classifyAll(
+                new curfew.scan.MockAccessSource().list(), new curfew.scan.ScanRules()));
         assertTrue(body("/acessos/gh-token-18").contains("Revogar"));
         given().when().get("/acessos/nao-existe").then().statusCode(404);
         String scan = body("/varredura");

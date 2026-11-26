@@ -1,12 +1,15 @@
 package curfew.web;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import curfew.read.ReadCoordinator;
 import curfew.scan.ClassifiedAccess;
 import curfew.scan.LeaseBook;
 import curfew.scan.LeaseView;
+import curfew.scan.ReadingNote;
 import curfew.scan.NightlyClose;
 import curfew.scan.NightlyNote;
 import curfew.scan.TokenLedger;
@@ -47,6 +50,8 @@ public class Pages {
                 String passage);
 
         public static native TemplateInstance connections(String nav, String github, String aws);
+
+        public static native TemplateInstance contagem(String nav, List<ReadingNote> notes);
     }
 
     private final AccessStore store;
@@ -120,5 +125,14 @@ public class Pages {
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance connections() {
         return Templates.connections("conexoes", reading.githubLabel(), reading.awsLabel());
+    }
+
+    @GET
+    @Path("contagem")
+    @Produces(MediaType.TEXT_HTML)
+    public TemplateInstance contagem() {
+        List<ReadingNote> notes = new ArrayList<>(store.readings());
+        Collections.reverse(notes);
+        return Templates.contagem("contagem", notes);
     }
 }

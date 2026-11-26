@@ -6,7 +6,7 @@ Este diretório é a fonte da verificação das telas. Leia o índice e siga o a
 
 - Uma execução só. Não dirija uma Curfew que já estava na porta.
 - Rode `python3 .cursor/skills/verify-curfew/verify-curfew.py doctor` e exija `"h1": "Fila"`.
-- A prova usa o exemplo. O processo não leva token de GitHub nem chave de AWS.
+- A prova não leva token de GitHub nem chave de AWS. A fila começa vazia.
 - Não apague `artifacts/` ao encerrar.
 
 ## Driving conventions
@@ -24,7 +24,7 @@ Este diretório é a fonte da verificação das telas. Leia o índice e siga o a
 
 ## Features
 
-- [Fila](./fila.md) cobre o exemplo, vazio, carregando e erro.
-- [Detalhe](./detalhe.md) cobre o token sem dono e o id que não existe.
-- [Varredura](./varredura.md) cobre o log ao vivo e os contadores do exemplo.
+- [Fila](./fila.md) cobre a fila vazia, o estado vazio, carregando e erro.
+- [Detalhe](./detalhe.md) cobre o id que não existe.
+- [Varredura](./varredura.md) cobre o log ao vivo sem conta.
 - [Conexões](./conexoes.md) cobre GitHub e AWS desligados nesta instância.

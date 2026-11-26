@@ -1,6 +1,6 @@
 # Varredura
 
-A varredura acompanha a leitura. O HTML abre com contadores em zero. As linhas chegam pelo fluxo e o exemplo termina em 6, 6, 0 e 720.
+A varredura acompanha a leitura. O HTML abre com contadores em zero. Sem conta, o fluxo termina em 0, 0, 0 e 0.
 
 ## Sub-features
 
@@ -19,11 +19,11 @@ A varredura acompanha a leitura. O HTML abre com contadores em zero. As linhas c
 Preconditions:
 
 - `doctor` devolve `"h1": "Fila"`.
-- A instância é o exemplo. Conta real não entra neste processo.
+- A instância não leva conta. Conta real não entra neste processo.
 
 - **Página.** Abra a varredura. Rode `python3 .cursor/skills/verify-curfew/verify-curfew.py get /varredura`. Status 200, h1 `Varredura`, marcadores `Acompanhamento`, `Passagem da noite` e `Executar a passagem`. Não envie o formulário. Esse comando só lê.
 - **Noite vazia.** Abra a varredura vazia. Rode `python3 .cursor/skills/verify-curfew/verify-curfew.py get '/varredura?estado=vazio'`. Status 200, sem o marcador `Passagem da noite`.
-- **Fluxo.** Leia até o fim. Rode `python3 .cursor/skills/verify-curfew/verify-curfew.py log`. `done` é `6 6 0 720`, com início, Revogar e nada fechado. `secret` false.
+- **Fluxo.** Leia até o fim. Rode `python3 .cursor/skills/verify-curfew/verify-curfew.py log`. `done` é `0 0 0 0`, com início e nada fechado. `secret` false.
 - **Print.** Grave a tela. Rode `python3 .cursor/skills/verify-curfew/verify-curfew.py screenshot /varredura`. O JSON traz o caminho em `artifacts/varredura.png` e o arquivo continua lá depois de `down`.
 
 ## Gotchas

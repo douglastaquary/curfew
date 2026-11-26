@@ -2,9 +2,11 @@ package curfew.store;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -12,6 +14,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import curfew.scan.CloseTarget;
 import curfew.scan.ClassifiedAccess;
 import curfew.scan.HumanDecision;
+import curfew.scan.ReadingNote;
 import io.quarkus.arc.profile.IfBuildProfile;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -31,6 +34,7 @@ import software.amazon.awssdk.services.dynamodb.model.ScanRequest;
 public class DynamoAccessStore implements AccessStore {
 
     static final String DECISION_PREFIX = "decision#";
+    static final String READING_PREFIX = "reading#";
 
     private final DynamoDbClient dynamo;
     private final String table;
@@ -48,7 +52,7 @@ public class DynamoAccessStore implements AccessStore {
         List<ClassifiedAccess> found = new ArrayList<>();
         for (Map<String, AttributeValue> item : response.items()) {
             String id = text(item, "id");
-            if (id.startsWith(DECISION_PREFIX)) {
+            if (keptAside(id)) {
                 continue;
             }
             found.add(fromAccess(item));
@@ -58,7 +62,7 @@ public class DynamoAccessStore implements AccessStore {
 
     @Override
     public Optional<ClassifiedAccess> find(String id) {
-        if (id == null || id.startsWith(DECISION_PREFIX)) {
+        if (id == null || keptAside(id)) {
             return Optional.empty();
         }
         var response = dynamo.getItem(GetItemRequest.builder()
@@ -73,9 +77,39 @@ public class DynamoAccessStore implements AccessStore {
 
     @Override
     public void replace(List<ClassifiedAccess> items) {
+        Set<String> keep = new HashSet<>();
+        for (ClassifiedAccess item : items) {
+            keep.add(item.id());
+        }
+        var existing = dynamo.scan(ScanRequest.builder().tableName(table).build());
+        List<String> ids = new ArrayList<>();
+        for (Map<String, AttributeValue> item : existing.items()) {
+            ids.add(text(item, "id"));
+        }
+        for (String id : idsToDrop(ids, keep)) {
+            dynamo.deleteItem(DeleteItemRequest.builder()
+                    .tableName(table)
+                    .key(Map.of("id", AttributeValue.fromS(id)))
+                    .build());
+        }
         for (ClassifiedAccess item : items) {
             dynamo.putItem(PutItemRequest.builder().tableName(table).item(toAccess(item)).build());
         }
+    }
+
+    static List<String> idsToDrop(List<String> existing, Set<String> keep) {
+        List<String> drop = new ArrayList<>();
+        for (String id : existing) {
+            if (id == null || id.isBlank() || keptAside(id) || keep.contains(id)) {
+                continue;
+            }
+            drop.add(id);
+        }
+        return drop;
+    }
+
+    private static boolean keptAside(String id) {
+        return id.startsWith(DECISION_PREFIX) || id.startsWith(READING_PREFIX);
     }
 
     @Override
@@ -119,6 +153,41 @@ public class DynamoAccessStore implements AccessStore {
     @Override
     public Optional<String> target(String id) {
         return Optional.ofNullable(targets.get(id));
+    }
+
+    @Override
+    public void rememberReading(ReadingNote note) {
+        ReadingNote kept = note.kept();
+        Map<String, AttributeValue> values = new HashMap<>();
+        values.put("id", AttributeValue.fromS(READING_PREFIX + System.currentTimeMillis()));
+        values.put("at", AttributeValue.fromS(kept.at()));
+        values.put("items", AttributeValue.fromN(Integer.toString(kept.items())));
+        values.put("byRule", AttributeValue.fromN(Integer.toString(kept.byRule())));
+        values.put("modelCalls", AttributeValue.fromN(Integer.toString(kept.modelCalls())));
+        values.put("tokensAvoided", AttributeValue.fromN(Integer.toString(kept.tokensAvoided())));
+        values.put("lines", AttributeValue.fromS(String.join("\n", kept.lines())));
+        dynamo.putItem(PutItemRequest.builder().tableName(table).item(values).build());
+    }
+
+    @Override
+    public List<ReadingNote> readings() {
+        var response = dynamo.scan(ScanRequest.builder().tableName(table).build());
+        List<ReadingNote> found = new ArrayList<>();
+        for (Map<String, AttributeValue> item : response.items()) {
+            if (!text(item, "id").startsWith(READING_PREFIX)) {
+                continue;
+            }
+            String raw = text(item, "lines");
+            List<String> lines = raw.isBlank() ? List.of() : List.of(raw.split("\n"));
+            found.add(new ReadingNote(
+                    text(item, "at"),
+                    number(item, "items"),
+                    number(item, "byRule"),
+                    number(item, "modelCalls"),
+                    number(item, "tokensAvoided"),
+                    lines));
+        }
+        return List.copyOf(found);
     }
 
     private Map<String, AttributeValue> toAccess(ClassifiedAccess item) {
@@ -171,6 +240,14 @@ public class DynamoAccessStore implements AccessStore {
                 Integer.parseInt(item.get("ageDays").n()),
                 item.containsKey("hadOwner") && item.get("hadOwner").bool(),
                 text(item, "choice"));
+    }
+
+    private static int number(Map<String, AttributeValue> item, String key) {
+        AttributeValue value = item.get(key);
+        if (value == null || value.n() == null || value.n().isBlank()) {
+            return 0;
+        }
+        return Integer.parseInt(value.n());
     }
 
     private static String text(Map<String, AttributeValue> item, String key) {

@@ -22,11 +22,11 @@ class LeasePageTest {
     @Test
     void exampleLeaseEndsInsideADay() {
         try {
+            book.reset(Instant.now());
             String html = given().when().get("/").then().statusCode(200).extract().asString();
             assertTrue(html.contains("Chave com prazo"));
             assertTrue(html.contains("menos de 24 horas"));
-            assertTrue(html.contains("Abrir o pull request"));
-            assertTrue(html.contains("23 horas · vale até"));
+            assertFalse(html.contains("Abrir o pull request"));
             assertTrue(html.contains("Entregar a chave"));
             assertFalse(body("/?estado=vazio").contains("Entregar a chave"));
             assertFalse(html.contains("ghp_"));

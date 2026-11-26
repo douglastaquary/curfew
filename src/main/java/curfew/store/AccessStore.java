@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import curfew.scan.ClassifiedAccess;
 import curfew.scan.HumanDecision;
+import curfew.scan.ReadingNote;
 
 public interface AccessStore {
 
@@ -23,4 +24,8 @@ public interface AccessStore {
     void rememberTarget(String id, String target);
 
     Optional<String> target(String id);
+
+    void rememberReading(ReadingNote note);
+
+    List<ReadingNote> readings();
 }

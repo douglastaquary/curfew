@@ -220,13 +220,13 @@ def cmd_log():
     done = next((item["data"] for item in events if item["event"] == "done"), "")
     data = "\n".join(item["data"] for item in events)
     ok = (
-        done == "6 6 0 720"
+        done == "0 0 0 0"
         and "Início da leitura" in data
-        and "Revogar" in data
         and "Nada foi fechado" in data
+        and "Revogar" not in data
     )
     if not ok:
-        fail("A varredura de exemplo não fechou em 6 6 0 720.", "A instância de verificação usa o exemplo, sem conta real.")
+        fail("A varredura sem conta não fechou em 0 0 0 0.", "A instância de verificação não leva token nem chave.")
     return {
         "ok": True,
         "done": done,

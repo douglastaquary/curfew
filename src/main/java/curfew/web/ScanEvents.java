@@ -2,6 +2,9 @@ package curfew.web;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -10,6 +13,7 @@ import curfew.read.ReadCoordinator;
 import curfew.read.ReadingFailed;
 import curfew.scan.ClassifiedAccess;
 import curfew.scan.RawAccess;
+import curfew.scan.ReadingNote;
 import curfew.scan.ScanEngine;
 import curfew.scan.ScanLog;
 import curfew.scan.ScanRules;
@@ -29,6 +33,9 @@ import jakarta.ws.rs.sse.SseEventSink;
 
 @Path("/")
 public class ScanEvents {
+
+    private static final DateTimeFormatter STAMP = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+            .withZone(ZoneId.of("America/Sao_Paulo"));
 
     private final AccessStore store;
     private final ReadCoordinator reading;
@@ -66,7 +73,9 @@ public class ScanEvents {
                 return;
             }
 
-            send(sink, sse, "line", ScanLog.clock(Instant.now()) + "  Início da leitura. GitHub e AWS.");
+            List<String> lines = new ArrayList<>();
+            lines.add(ScanLog.clock(Instant.now()) + "  Início da leitura. GitHub e AWS.");
+            send(sink, sse, "line", lines.getLast());
             List<RawAccess> raw;
             try {
                 raw = reading.list();
@@ -84,15 +93,24 @@ public class ScanEvents {
                     return;
                 }
                 pause();
-                send(sink, sse, "line", ScanLog.line(item, ScanLog.clock(Instant.now())));
+                lines.add(ScanLog.line(item, ScanLog.clock(Instant.now())));
+                send(sink, sse, "line", lines.getLast());
             }
             pause();
             TokenReport report = new TokenLedger().report(classified.size());
-            send(sink, sse, "line", ScanLog.clock(Instant.now())
+            lines.add(ScanLog.clock(Instant.now())
                     + "  Fim. " + report.itemsClassifiedByRule()
                     + " itens por regra. " + report.modelCalls()
                     + " chamadas de modelo. " + report.tokensAvoided()
                     + " tokens evitados. Nada foi fechado.");
+            send(sink, sse, "line", lines.getLast());
+            store.rememberReading(new ReadingNote(
+                    STAMP.format(Instant.now()),
+                    classified.size(),
+                    report.itemsClassifiedByRule(),
+                    report.modelCalls(),
+                    report.tokensAvoided(),
+                    lines));
             send(sink, sse, "done", report.itemsClassifiedByRule() + " "
                     + report.itemsClassifiedByRule() + " "
                     + report.modelCalls() + " "

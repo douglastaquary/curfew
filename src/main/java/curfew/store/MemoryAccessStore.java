@@ -1,6 +1,5 @@
 package curfew.store;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -9,9 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import curfew.scan.CloseTarget;
 import curfew.scan.ClassifiedAccess;
 import curfew.scan.HumanDecision;
-import curfew.scan.MockAccessSource;
-import curfew.scan.ScanEngine;
-import curfew.scan.ScanRules;
+import curfew.scan.ReadingNote;
 import io.quarkus.arc.profile.UnlessBuildProfile;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -21,11 +18,8 @@ public class MemoryAccessStore implements AccessStore {
 
     private final List<ClassifiedAccess> items = new CopyOnWriteArrayList<>();
     private final List<HumanDecision> decisions = new CopyOnWriteArrayList<>();
+    private final List<ReadingNote> readings = new CopyOnWriteArrayList<>();
     private final ConcurrentHashMap<String, String> targets = new ConcurrentHashMap<>();
-
-    public MemoryAccessStore() {
-        replace(new ScanEngine(4).classifyAll(new MockAccessSource().list(), new ScanRules()));
-    }
 
     @Override
     public List<ClassifiedAccess> list() {
@@ -68,5 +62,15 @@ public class MemoryAccessStore implements AccessStore {
     @Override
     public Optional<String> target(String id) {
         return Optional.ofNullable(targets.get(id));
+    }
+
+    @Override
+    public void rememberReading(ReadingNote note) {
+        readings.add(note.kept());
+    }
+
+    @Override
+    public List<ReadingNote> readings() {
+        return List.copyOf(readings);
     }
 }

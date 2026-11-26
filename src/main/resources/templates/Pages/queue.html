@@ -3,12 +3,12 @@
 {#body}
     <header class="page-head">
         <h1>Fila</h1>
-        <p>O que ainda está aberto depois da tarefa. Dados fictícios. Nada é fechado.</p>
+        <p>O que ainda está aberto depois da tarefa. Nada é fechado.</p>
     </header>
     {#if state == 'DATA'}
         <section class="panel">
             <h2>Chave com prazo</h2>
-            <p>A tarefa recebe uma validade. Ela acaba em menos de 24 horas. O exemplo não emite segredo. A sessão AWS sai só na API, com CURFEW_ISSUE=sim, e o valor não fica nesta página.</p>
+            <p>A tarefa recebe uma validade. Ela acaba em menos de 24 horas. O formulário não emite segredo. A sessão AWS sai só na API, com CURFEW_ISSUE=sim, e o valor não fica nesta página.</p>
             {#if leaseNote}
                 <p class="banner" role="status">{leaseNote}</p>
             {/if}
@@ -36,6 +36,8 @@
         <p class="banner banner-error" role="alert">A leitura não completou. Nada foi fechado.</p>
     {#else if state == 'EMPTY'}
         <p class="banner">Nenhum acesso esquecido nesta leitura.</p>
+    {#else if !items}
+        <p class="banner">Nenhum acesso nesta leitura. Conecte GitHub ou AWS em <a href="/conexoes">Conexões</a>. Sem isso a fila fica vazia.</p>
     {#else}
         <div class="filters" role="group" aria-label="Filtrar por tipo">
             <button type="button" data-filter="todos" aria-pressed="true">Todos</button>

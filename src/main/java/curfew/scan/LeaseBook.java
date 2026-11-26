@@ -12,14 +12,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import jakarta.enterprise.context.ApplicationScoped;
 
 /**
- * Chaves desta execução. O exemplo nasce com 23 horas e não chama a conta.
+ * Chaves desta execução. Começa vazia. 24 horas ou mais não entra.
  */
 @ApplicationScoped
 public class LeaseBook {
 
     static final int CAP = 20;
-    static final String SEED_TASK = "Abrir o pull request";
-
     private static final ZoneId BRASILIA = ZoneId.of("America/Sao_Paulo");
     private static final DateTimeFormatter CLOCK = DateTimeFormatter.ofPattern("dd/MM HH:mm").withZone(BRASILIA);
 
@@ -31,7 +29,6 @@ public class LeaseBook {
 
     public void reset(Instant now) {
         leases.clear();
-        issue(SEED_TASK, "GitHub", LeaseTerm.MAX_HOURS, now);
     }
 
     public Optional<TaskLease> issue(String task, String system, int hours, Instant now) {

@@ -42,7 +42,7 @@ O mapa está em `features/`. Cada arquivo diz a rota, o comando e o resultado qu
 
 ## Evidence
 
-O print vai para `.cursor/skills/verify-curfew/artifacts/`. O fluxo da varredura prova `6 6 0 720`, com início, Revogar e "Nada foi fechado".
+O print vai para `.cursor/skills/verify-curfew/artifacts/`. O fluxo da varredura sem conta prova `0 0 0 0`, com início e "Nada foi fechado".
 
 ```bash
 python3 .cursor/skills/verify-curfew/verify-curfew.py screenshot /varredura

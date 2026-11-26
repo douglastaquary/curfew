@@ -1,6 +1,6 @@
 # Curfew
 
-Fila dos acessos que um agente de IA deixou valendo: token, chave, webhook, permissão larga e senha no log. Este corte mostra dados fictícios. Nada é lido de uma conta real e nada é fechado.
+Fila dos acessos que um agente de IA deixou valendo: token, chave, webhook, permissão larga e senha no log. Sem conta ligada, a fila fica vazia. Nada é fechado.
 
 O plano de produto está em [docs/plano.md](docs/plano.md). A página do produto está em [docs/index.html](docs/index.html).
 
@@ -58,7 +58,7 @@ O dev sobe em [http://127.0.0.1:8473/](http://127.0.0.1:8473/).
 
 Telas: `/` fila, `/acessos/gh-token-18` detalhe, `/varredura` log ao vivo, `/conexoes`. Os estados de exemplo são `/?estado=vazio`, `/?estado=carregando` e `/?estado=erro`.
 
-Sem variável, a fila é o exemplo. Para ler a conta de verdade, exporte `CURFEW_GITHUB_TOKEN` (leitura de repositório) ou o par `CURFEW_AWS_ACCESS_KEY_ID` e `CURFEW_AWS_SECRET_ACCESS_KEY` (IAM `ListAccessKeys`). A fila guarda nome, idade e dono. URL, material de chave e valor de segredo são descartados. Nada é fechado. Os testes ignoram essas variáveis.
+Sem variável, a fila fica vazia. Para ler a conta de verdade, exporte `CURFEW_GITHUB_TOKEN` (leitura de repositório) ou o par `CURFEW_AWS_ACCESS_KEY_ID` e `CURFEW_AWS_SECRET_ACCESS_KEY` (IAM `ListAccessKeys`). A fila guarda nome, idade e dono. URL, material de chave e valor de segredo são descartados. Nada é fechado. Os testes ignoram essas variáveis.
 
 Para provar as telas no ar, na raiz:
 
@@ -92,7 +92,7 @@ Como ligar GitHub, AWS, CI e o servidor está em [docs/conectar.md](docs/conecta
 
 ## Desenvolvimento
 
-A fila fictícia está em `src/main/java/curfew/scan/MockAccessSource.java`. As regras estão em `ScanRules`. `TokenLedger` conta tokens que um modelo teria gasto. Neste corte as chamadas de modelo são zero.
+`MockAccessSource` só entra no teste. As regras estão em `ScanRules`. `TokenLedger` conta tokens que um modelo teria gasto. Neste corte as chamadas de modelo são zero. A contagem de cada leitura fica em `/contagem`.
 
 O log ao vivo sai de `GET /varredura/eventos`. Cada linha leva sistema, idade, dono e ação. Sem segredo.
 

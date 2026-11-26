@@ -1,0 +1,25 @@
+{#include layout}
+{#title}Contagem · Curfew{/title}
+{#body}
+    <header class="page-head">
+        <h1>Contagem</h1>
+        <p>Cada leitura deixa a hora, as quantidades e as linhas já mostradas na varredura. Nenhuma chamada de modelo acontece neste corte. Token e chave não entram.</p>
+        <p>Uma instalação por cliente. Esta contagem é desta instalação.</p>
+    </header>
+    {#if notes}
+        {#for note in notes}
+            <section class="panel">
+                <h2>{note.at}</h2>
+                <p>{note.items} itens. {note.byRule} por regra. {note.modelCalls} chamadas de modelo. {note.tokensAvoided} tokens evitados.</p>
+                <ul class="connections">
+                    {#for line in note.lines}
+                        <li>{line}</li>
+                    {/for}
+                </ul>
+            </section>
+        {/for}
+    {#else}
+        <p class="banner">Nenhuma leitura registrada.</p>
+    {/if}
+{/body}
+{/include}

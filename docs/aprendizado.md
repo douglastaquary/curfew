@@ -4,7 +4,11 @@ Cada linha cita um teste que trava a correção. `LearningLedgerTest` falha se a
 
 | Correção | Teste |
 | --- | --- |
-| A fila mostra o mock e nenhum segredo | `QueuePageTest.queueShowsTheMockAndNoSecret` |
+| Sem conta ligada a fila começa vazia e sem segredo | `QueuePageTest.queueStartsEmptyWithNoSecret` |
+| A leitura vira contagem e não chama modelo | `CountPageTest.aReadingBecomesCountsWithoutAModelCall` |
+| Marcador de segredo não entra na contagem | `ReadingGuardTest.secretMarkersStayOutOfTheReading` |
+| A troca da fila apaga o exemplo antigo e conserva a contagem | `DynamoAccessStoreTest.replaceDropsStaleAccessAndKeepsReadings` |
+| Uma instalação por cliente, sem login compartilhado | `ClientInstallTest.oneInstallPerClientAndNoSharedLogin` |
 | Vazio, carregando e erro são explícitos | `QueuePageTest.emptyLoadingAndErrorAreExplicit` |
 | Detalhe, varredura e conexões renderizam, e id ausente é 404 | `QueuePageTest.detailScanAndConnectionsRender` |
 | O log ao vivo não leva segredo e fecha em 720 | `QueuePageTest.scanLogStreamsEachStepWithoutSecrets` |
@@ -24,7 +28,7 @@ Cada linha cita um teste que trava a correção. `LearningLedgerTest` falha se a
 | A passagem desarmada tira a fila local e não chama a conta | `NightPageTest.passageRemovesLocalRowsAndDoesNotCallTheAccount` |
 | O token do GitHub não entra na URL de exclusão | `GithubCloseTest.tokenStaysOutOfTheUrl` |
 | A chave da tarefa acaba antes de 24 horas e não guarda segredo | `LeaseTermTest.rejectsAFullDayAndKeepsNoSecret` |
-| A fila mostra a chave de exemplo e 24 horas não entra | `LeasePageTest.exampleLeaseEndsInsideADay` |
+| A chave nasce vazia, acaba antes de 24 horas e 24 horas não entra | `LeasePageTest.exampleLeaseEndsInsideADay` |
 | A sessão AWS armada não entra na fila | `LeaseDeliveryTest.armedSessionStaysOutOfTheQueue` |
 | Chave AWS em branco não pede sessão | `StsSessionMintTest.blankKeysDoNotCallTheAccount` |
 | Toda chave aceita acaba antes de um dia e a noite desarmada conserva quem pede humano | `LeaseAndNightPropertyTest.everyLeaseEndsInsideADayAndTheQueueHidesTheSecret` |
