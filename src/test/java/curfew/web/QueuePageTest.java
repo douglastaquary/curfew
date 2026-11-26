@@ -34,9 +34,23 @@ class QueuePageTest {
         assertTrue(body("/acessos/gh-token-18").contains("Revogar"));
         given().when().get("/acessos/nao-existe").then().statusCode(404);
         String scan = body("/varredura");
-        assertTrue(scan.contains("Chamadas de modelo"));
+        assertTrue(scan.contains("Acompanhamento"));
+        assertTrue(scan.contains("id=\"scan-log\""));
         assertTrue(scan.contains(">0<"));
         assertTrue(body("/conexoes").contains("Leitura ainda não ligada"));
+    }
+
+    @Test
+    void scanLogStreamsEachStepWithoutSecrets() {
+        String events = given().when().get("/varredura/eventos").then().statusCode(200).extract().asString();
+
+        assertTrue(events.contains("Início da leitura"));
+        assertTrue(events.contains("GitHub · Token"));
+        assertTrue(events.contains("Revogar"));
+        assertTrue(events.contains("Nada foi fechado"));
+        assertTrue(events.contains("720"));
+        assertFalse(events.contains("ghp_"));
+        assertFalse(events.contains("AKIA"));
     }
 
     private static String body(String path) {

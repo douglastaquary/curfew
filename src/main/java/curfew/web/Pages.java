@@ -2,12 +2,7 @@ package curfew.web;
 
 import java.util.List;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-
 import curfew.scan.ClassifiedAccess;
-import curfew.scan.MockAccessSource;
-import curfew.scan.ScanEngine;
-import curfew.scan.ScanRules;
 import curfew.scan.TokenLedger;
 import curfew.scan.TokenReport;
 import curfew.store.AccessStore;
@@ -38,12 +33,10 @@ public class Pages {
     }
 
     private final AccessStore store;
-    private final int parallelism;
 
     @Inject
-    public Pages(AccessStore store, @ConfigProperty(name = "curfew.scan.parallelism") int parallelism) {
+    public Pages(AccessStore store) {
         this.store = store;
-        this.parallelism = parallelism;
     }
 
     @GET
@@ -68,15 +61,7 @@ public class Pages {
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance scan(@QueryParam("estado") String estado) {
         ViewState state = ViewState.from(estado);
-        if (state == ViewState.ERROR || state == ViewState.LOADING) {
-            return Templates.scan("varredura", state.name(), new TokenLedger().report(0), 0);
-        }
-        var classified = new ScanEngine(parallelism).classifyAll(new MockAccessSource().list(), new ScanRules());
-        if (state == ViewState.DATA) {
-            store.replace(classified);
-        }
-        int count = state == ViewState.EMPTY ? 0 : classified.size();
-        return Templates.scan("varredura", state.name(), new TokenLedger().report(count), count);
+        return Templates.scan("varredura", state.name(), new TokenLedger().report(0), 0);
     }
 
     @GET

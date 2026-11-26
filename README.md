@@ -31,7 +31,7 @@ Telas:
 
 - `/` fila
 - `/acessos/gh-token-18` detalhe
-- `/varredura` contagem de itens e tokens evitados
+- `/varredura` contagem de itens, tokens evitados e o log ao vivo da leitura
 - `/conexoes` GitHub e AWS ainda sem leitura
 - `/?estado=vazio`, `/?estado=carregando`, `/?estado=erro`
 

@@ -27,6 +27,7 @@ Abra `http://127.0.0.1:8473/`. Estados da fila: `/?estado=vazio`, `/?estado=carr
 - Regras: `src/main/java/curfew/scan/ScanRules.java`
 - Teto de concorrência: `ScanEngine`
 - Tokens evitados: `TokenLedger` (o contador de chamadas de modelo permanece zero)
+- Log ao vivo: `GET /varredura/eventos`. Cada linha leva sistema, idade, dono e ação. Sem segredo.
 - Telas: `src/main/resources/templates/Pages/` e `src/main/resources/META-INF/resources/app.css`
 - Filtro no navegador: `app.js`. Ele não faz pedido de rede.
 

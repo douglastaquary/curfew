@@ -13,25 +13,29 @@
         <dl class="stats">
             <div>
                 <dt>Itens lidos</dt>
-                <dd>{items}</dd>
+                <dd id="stat-items">{items}</dd>
             </div>
             <div>
                 <dt>Classificados por regra</dt>
-                <dd>{report.itemsClassifiedByRule}</dd>
+                <dd id="stat-rules">{report.itemsClassifiedByRule}</dd>
             </div>
             <div>
                 <dt>Chamadas de modelo</dt>
-                <dd>{report.modelCalls}</dd>
+                <dd id="stat-calls">{report.modelCalls}</dd>
             </div>
             <div>
                 <dt>Tokens evitados</dt>
-                <dd>{report.tokensAvoided}</dd>
+                <dd id="stat-tokens">{report.tokensAvoided}</dd>
             </div>
         </dl>
+        <h2>Acompanhamento</h2>
         {#if state == 'EMPTY'}
-            <p class="banner">Nenhum acesso esquecido nesta leitura.</p>
+            <ol class="log" aria-live="polite">
+                <li>Nenhum acesso esquecido nesta leitura.</li>
+            </ol>
         {#else}
-            <p class="footnote">A regra classificou tudo. O modelo ficaria para uma linha ambígua, e só depois de decisões reais.</p>
+            <ol id="scan-log" class="log" data-live="true" aria-live="polite" aria-relevant="additions"></ol>
+            <p class="footnote">Cada linha chega quando a regra termina aquele acesso. Horário de Brasília. Nada é fechado.</p>
         {/if}
     {/if}
 {/body}
