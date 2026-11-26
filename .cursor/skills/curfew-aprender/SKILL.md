@@ -38,7 +38,7 @@ Quem usa a aplicação encontra isto:
 
 1. Diga o objetivo e a menor mudança que o cumpre. Nomeie o dado antes do código. Os tipos de hoje são `RawAccess` e `ClassifiedAccess`. Faça só essa mudança.
 2. Rode `./mvnw test`.
-3. Se a tela mudou, suba `./mvnw quarkus:dev` na porta 8473 e percorra a rota do mapa. Confira vazio, carregando e erro quando a fila mudar.
+3. Se a tela mudou, prove com `python3 .cursor/skills/verify-curfew/verify-curfew.py prove` e rode `down` antes de `./mvnw test`. O mapa das telas está em `.cursor/skills/verify-curfew/features/`.
 
 ## Corrigir
 

@@ -60,6 +60,14 @@ Telas: `/` fila, `/acessos/gh-token-18` detalhe, `/varredura` log ao vivo, `/con
 
 Sem variável, a fila é o exemplo. Para ler a conta de verdade, exporte `CURFEW_GITHUB_TOKEN` (leitura de repositório) ou o par `CURFEW_AWS_ACCESS_KEY_ID` e `CURFEW_AWS_SECRET_ACCESS_KEY` (IAM `ListAccessKeys`). A fila guarda nome, idade e dono. URL, material de chave e valor de segredo são descartados. Nada é fechado. Os testes ignoram essas variáveis.
 
+Para provar as telas no ar, na raiz:
+
+```bash
+python3 .cursor/skills/verify-curfew/verify-curfew.py prove
+```
+
+O comando sobe uma instância sem as variáveis de conta, confere a varredura do exemplo e grava o print em `.cursor/skills/verify-curfew/artifacts/`. Ele encerra o processo que ele mesmo subiu. Rode isso antes de `./mvnw test` se a porta 8473 ainda estiver ocupada.
+
 `./mvnw package` gera `target/function.zip`. Gerar o zip não publica nada. Não rode `sam deploy` neste corte.
 
 ## Erros comuns

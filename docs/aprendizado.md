@@ -17,3 +17,5 @@ Cada linha cita um teste que trava a correção. `LearningLedgerTest` falha se a
 | Regra evita um orçamento fixo e não chama modelo | `TokenLedgerTest.rulesAvoidAFixedBudgetAndNeverCallAModel` |
 | O registro da decisão não tem campo de segredo | `TokenLedgerTest.recordsHaveNoSecretField` |
 | A leitura real descarta URL, material de chave e valor de segredo | `MetadataInventoryTest.dropsUrlKeyMaterialAndSecretValues` |
+| O mapa de verificação cobre as quatro telas | `VerifyCurfewTest.featureMapKeepsTheFourScreens` |
+| O dry-run da verificação não sobe o app nem imprime segredo | `VerifyCurfewTest.dryRunDoesNotStartTheAppOrPrintASecret` |

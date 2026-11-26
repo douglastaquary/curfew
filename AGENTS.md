@@ -21,7 +21,7 @@ O push vai para o GitHub, no repositório `douglastaquary/curfew`. Não envie es
 ./mvnw quarkus:dev
 ```
 
-A porta é 8473. Os testes são `./mvnw test`.
+A porta é 8473. Os testes são `./mvnw test`. A prova no ar é `python3 .cursor/skills/verify-curfew/verify-curfew.py prove`.
 
 O mock está em `src/main/java/curfew/scan/MockAccessSource.java`. As regras estão em `ScanRules`. Os templates estão em `src/main/resources/templates/Pages/`.
 

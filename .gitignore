@@ -7,3 +7,4 @@ target/
 .settings/
 samconfig.toml
 .aws-sam/
+.cursor/skills/verify-curfew/run/
