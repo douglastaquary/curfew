@@ -37,6 +37,8 @@ python3.12 -m pip install pygments
 sam --version
 ```
 
+No macOS 12, não rode `brew reinstall aws-sam-cli`. O Homebrew responde que as Command Line Tools não suportam esse sistema. Não apague `/Library/Developer/CommandLineTools`. O pacote oficial do SAM também não cobre macOS anterior ao 13.
+
 ```bash
 ./mvnw -q package
 export CURFEW_GATE='um-segredo-de-16-ou-mais'
@@ -65,5 +67,6 @@ O zip é `target/function.zip`. Gerar o zip não publica.
 | 26 nov 2026, 08:19, Brasília | `./mvnw -q package` falhou em `generate-code` com `NoSuchElementException` | O Maven não estava no Java 21. Confira `./mvnw -version` e o `JAVA_HOME`. |
 | 26 nov 2026, 08:25, Brasília | `./mvnw -version` mostrou Java 17.0.14, runtime `jbr-17` | É o JDK do IntelliJ. Instale o Temurin 21 e exporte o `JAVA_HOME` para ele. |
 | 26 nov 2026, 08:34, Brasília | `sam` morreu com `No module named 'pygments'` | O CLI está no Python 3.12 de `/usr/local` sem essa biblioteca. `python3.12 -m pip install pygments` e depois `sam --version`. |
+| 26 nov 2026, 08:39, Brasília | `brew reinstall aws-sam-cli` disse que as Command Line Tools não suportam macOS 12 | Não reinstale por aí e não apague as ferramentas. O `sam` já existe. Falta o `pygments`. |
 
 Não cole a access key no chat. A skill que o próximo agente segue é `.cursor/skills/curfew-deploy/SKILL.md`.

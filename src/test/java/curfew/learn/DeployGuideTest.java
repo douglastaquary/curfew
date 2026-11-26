@@ -49,6 +49,8 @@ class DeployGuideTest {
 
         assertTrue(guide.contains("No module named 'pygments'"));
         assertTrue(guide.contains("python3.12 -m pip install pygments"));
+        assertTrue(guide.contains("não rode `brew reinstall aws-sam-cli`"));
         assertTrue(skill.contains("No module named 'pygments'"));
+        assertTrue(skill.contains("não rode `brew reinstall aws-sam-cli`"));
     }
 }
