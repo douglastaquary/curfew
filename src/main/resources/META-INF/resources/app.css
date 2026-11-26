@@ -112,6 +112,18 @@ tr:last-child td { border-bottom: 0; }
 
 .panel { margin-top: 20px; padding: 8px 18px 18px; background: var(--card); border: 1px solid var(--line); }
 
+.lease-form { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin-top: 12px; }
+
+.lease-form label { display: flex; flex-direction: column; gap: 4px; font-size: 0.82rem; color: var(--muted); }
+
+.lease-form input, .lease-form select {
+    font: inherit;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 6px 8px;
+}
+
 .action { font-size: 1.15rem; font-weight: 650; }
 
 .stats {

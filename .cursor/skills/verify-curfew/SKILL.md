@@ -5,7 +5,7 @@ description: Sobe a Curfew na porta 8473, dirige fila, detalhe, varredura e cone
 
 # Verificar a Curfew
 
-Uma instância só, a que este comando subiu. A prova é o exemplo: o processo filho não recebe `CURFEW_GITHUB_TOKEN`, o par `CURFEW_AWS_*` nem `CURFEW_CLOSE`. O comando não envia o formulário da passagem. O valor de um segredo não entra na saída.
+Uma instância só, a que este comando subiu. A prova é o exemplo: o processo filho não recebe `CURFEW_GITHUB_TOKEN`, o par `CURFEW_AWS_*` nem `CURFEW_CLOSE`. O comando não envia o formulário da passagem nem o da chave. O valor de um segredo não entra na saída.
 
 ## Launch
 

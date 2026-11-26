@@ -31,6 +31,8 @@ MARKERS = (
     "Passagem da noite",
     "Executar a passagem",
     "Trancar e pedir um humano",
+    "Chave com prazo",
+    "menos de 24 horas",
 )
 STRIPPED = (
     "CURFEW_GITHUB_TOKEN",
@@ -304,14 +306,28 @@ def cmd_plan(path):
 def cmd_prove():
     try:
         cmd_up(False)
+        queue = cmd_get("/")
+        if "Chave com prazo" not in queue["markers"] or "menos de 24 horas" not in queue["markers"]:
+            fail(
+                "A fila não mostra a chave com prazo.",
+                "A prova só lê. Não envie o formulário da chave.",
+            )
         page = cmd_get("/varredura")
         log = cmd_log()
         shot = cmd_screenshot("/varredura")
+        lease = cmd_screenshot("/")
     finally:
         cmd_down(False)
-    if not Path(ROOT, shot["path"]).exists():
+    if not Path(ROOT, shot["path"]).exists() or not Path(ROOT, lease["path"]).exists():
         fail("O down apagou a prova.", "A prova fica em artifacts/ e sobrevive ao down.")
-    return {"ok": True, "h1": page["h1"], "done": log["done"], "proof": shot["path"], "secret": False}
+    return {
+        "ok": True,
+        "h1": page["h1"],
+        "done": log["done"],
+        "proof": shot["path"],
+        "lease": lease["path"],
+        "secret": False,
+    }
 
 
 def fetch(path, timeout=10):

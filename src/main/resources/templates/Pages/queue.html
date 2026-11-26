@@ -5,6 +5,31 @@
         <h1>Fila</h1>
         <p>O que ainda está aberto depois da tarefa. Dados fictícios. Nada é fechado.</p>
     </header>
+    {#if state == 'DATA'}
+        <section class="panel">
+            <h2>Chave com prazo</h2>
+            <p>A tarefa recebe uma validade. Ela acaba em menos de 24 horas. O exemplo não emite segredo.</p>
+            {#if leaseNote}
+                <p class="banner" role="status">{leaseNote}</p>
+            {/if}
+            <form class="lease-form" method="post" action="/chaves">
+                <label>Tarefa <input name="tarefa" maxlength="48" required></label>
+                <label>Onde
+                    <select name="sistema">
+                        <option>GitHub</option>
+                        <option>AWS</option>
+                    </select>
+                </label>
+                <label>Horas <input name="horas" type="number" min="1" max="23" value="23" required></label>
+                <button type="submit">Entregar a chave</button>
+            </form>
+            <ul class="connections">
+                {#for lease in leases}
+                    <li><strong>{lease.task}</strong><span>{lease.until}</span></li>
+                {/for}
+            </ul>
+        </section>
+    {/if}
     {#if state == 'LOADING'}
         <p class="banner" role="status">Lendo GitHub e AWS.</p>
     {#else if state == 'ERROR'}

@@ -1,9 +1,12 @@
 package curfew.web;
 
+import java.time.Instant;
 import java.util.List;
 
 import curfew.read.ReadCoordinator;
 import curfew.scan.ClassifiedAccess;
+import curfew.scan.LeaseBook;
+import curfew.scan.LeaseView;
 import curfew.scan.NightlyClose;
 import curfew.scan.NightlyNote;
 import curfew.scan.TokenLedger;
@@ -24,7 +27,12 @@ public class Pages {
 
     @CheckedTemplate
     static class Templates {
-        public static native TemplateInstance queue(String nav, String state, List<ClassifiedAccess> items);
+        public static native TemplateInstance queue(
+                String nav,
+                String state,
+                List<ClassifiedAccess> items,
+                List<LeaseView> leases,
+                String leaseNote);
 
         public static native TemplateInstance detail(String nav, ClassifiedAccess item);
 
@@ -43,19 +51,30 @@ public class Pages {
 
     private final AccessStore store;
     private final ReadCoordinator reading;
+    private final LeaseBook leases;
 
     @Inject
-    public Pages(AccessStore store, ReadCoordinator reading) {
+    public Pages(AccessStore store, ReadCoordinator reading, LeaseBook leases) {
         this.store = store;
         this.reading = reading;
+        this.leases = leases;
     }
 
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public TemplateInstance queue(@QueryParam("estado") String estado) {
+    public TemplateInstance queue(@QueryParam("estado") String estado, @QueryParam("entregue") String entregue) {
         ViewState state = ViewState.from(estado);
         List<ClassifiedAccess> items = state == ViewState.DATA ? store.list() : List.of();
-        return Templates.queue("fila", state.name(), items);
+        List<LeaseView> views = state == ViewState.DATA ? leases.views(Instant.now()) : List.of();
+        return Templates.queue("fila", state.name(), items, views, note(entregue, views));
+    }
+
+    private static String note(String entregue, List<LeaseView> views) {
+        if (!"sim".equals(entregue) || views.isEmpty()) {
+            return "";
+        }
+        LeaseView last = views.getLast();
+        return last.task() + " " + last.until() + ". A conta não foi chamada.";
     }
 
     @GET
