@@ -25,3 +25,5 @@ Cada linha cita um teste que trava a correção. `LearningLedgerTest` falha se a
 | O token do GitHub não entra na URL de exclusão | `GithubCloseTest.tokenStaysOutOfTheUrl` |
 | A chave da tarefa acaba antes de 24 horas e não guarda segredo | `LeaseTermTest.rejectsAFullDayAndKeepsNoSecret` |
 | A fila mostra a chave de exemplo e 24 horas não entra | `LeasePageTest.exampleLeaseEndsInsideADay` |
+| A sessão AWS armada não entra na fila | `LeaseDeliveryTest.armedSessionStaysOutOfTheQueue` |
+| Chave AWS em branco não pede sessão | `StsSessionMintTest.blankKeysDoNotCallTheAccount` |

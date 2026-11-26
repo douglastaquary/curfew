@@ -72,7 +72,7 @@ Um plano de várias mudanças só segue depois que `python3 .cursor/skills/verif
 
 A passagem da noite aparece em `/varredura`. O botão tira da fila o que não pede humano. A conta não é chamada. Para apagar webhook, chave de deploy e nome de segredo no GitHub, exporte `CURFEW_CLOSE=sim` junto com `CURFEW_GITHUB_TOKEN`. Produção continua de fora. O identificador completo de chave AWS não é guardado, então essa chave não é apagada por aqui.
 
-A chave com prazo aparece na fila. A tarefa pede GitHub ou AWS e recebe no máximo 23 horas. O exemplo mostra a validade e não emite o segredo. 24 horas ou mais é recusado.
+A chave com prazo aparece na fila. A tarefa pede GitHub ou AWS e recebe no máximo 23 horas. O formulário mostra a validade e não emite o segredo. 24 horas ou mais é recusado. Para pedir a sessão AWS de verdade, envie `POST /chaves` com `Accept: application/json` e exporte `CURFEW_ISSUE=sim` junto com o par `CURFEW_AWS_ACCESS_KEY_ID` e `CURFEW_AWS_SECRET_ACCESS_KEY`. A resposta traz o segredo uma vez. A página seguinte mostra só os quatro finais.
 
 `./mvnw package` gera `target/function.zip`. Gerar o zip não publica nada. Não rode `sam deploy` neste corte.
 

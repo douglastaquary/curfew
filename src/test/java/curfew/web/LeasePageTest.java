@@ -31,6 +31,27 @@ class LeasePageTest {
             assertFalse(body("/?estado=vazio").contains("Entregar a chave"));
             assertFalse(html.contains("ghp_"));
             assertFalse(html.contains("AKIA"));
+            assertFalse(html.contains("secretAccessKey"));
+
+            String json = given()
+                    .accept("application/json")
+                    .formParam("tarefa", "Ler a fila")
+                    .formParam("sistema", "AWS")
+                    .formParam("horas", "23")
+                    .post("/chaves")
+                    .then()
+                    .statusCode(200)
+                    .extract()
+                    .asString();
+            assertTrue(json.contains("\"conta\":\"nao\""));
+            assertTrue(json.contains("Ler a fila"));
+            assertFalse(json.contains("secretAccessKey"));
+            assertFalse(json.contains("sessionToken"));
+            assertFalse(json.contains("ghp_"));
+            assertFalse(json.contains("AKIA"));
+            String after = body("/");
+            assertTrue(after.contains("Ler a fila"));
+            assertFalse(after.contains("secretAccessKey"));
 
             int before = book.size();
             given().formParam("tarefa", "Conferir o log")

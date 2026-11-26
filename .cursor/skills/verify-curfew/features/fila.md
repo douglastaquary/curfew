@@ -8,7 +8,7 @@ A fila mostra os acessos do exemplo e os três estados explícitos: vazio, carre
 - `fila-vazia`: a leitura não achou acesso esquecido.
 - `fila-carregando`: a leitura ainda está em curso.
 - `fila-erro`: a leitura não completou e nada foi fechado.
-- `fila-prazo`: a chave de exemplo acaba em menos de 24 horas. O comando não envia o formulário.
+- `fila-prazo`: a chave de exemplo acaba em menos de 24 horas. O comando não envia o formulário nem pede JSON.
 
 ## How to get to it (user POV)
 
@@ -30,4 +30,5 @@ Preconditions:
 ## Gotchas
 
 - Os botões de filtro só escondem linha no navegador. Este comando não clica. A prova HTTP é a fila completa.
+- Não envie `POST /chaves` com `Accept: application/json`. Sem `CURFEW_ISSUE=sim` essa rota não emite sessão. O comando de prova não envia.
 - `secret` false não imprime o valor. Se a resposta tiver marcador de segredo, o comando falha sem mostrar o corpo.

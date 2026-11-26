@@ -8,7 +8,7 @@
     {#if state == 'DATA'}
         <section class="panel">
             <h2>Chave com prazo</h2>
-            <p>A tarefa recebe uma validade. Ela acaba em menos de 24 horas. O exemplo não emite segredo.</p>
+            <p>A tarefa recebe uma validade. Ela acaba em menos de 24 horas. O exemplo não emite segredo. A sessão AWS sai só na API, com CURFEW_ISSUE=sim, e o valor não fica nesta página.</p>
             {#if leaseNote}
                 <p class="banner" role="status">{leaseNote}</p>
             {/if}

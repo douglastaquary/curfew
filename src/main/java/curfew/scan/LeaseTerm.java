@@ -29,7 +29,22 @@ public final class LeaseTerm {
         if (!expires.isBefore(now.plus(Duration.ofHours(24)))) {
             return Optional.empty();
         }
-        return Optional.of(new TaskLease(id, task.trim(), system, hours, now, expires));
+        return Optional.of(new TaskLease(id, task.trim(), system, hours, now, expires, tail(null)));
+    }
+
+    public static Optional<TaskLease> issue(
+            String id, String task, String system, int hours, Instant now, String tail) {
+        Optional<TaskLease> lease = issue(id, task, system, hours, now);
+        if (lease.isEmpty()) {
+            return lease;
+        }
+        TaskLease issued = lease.get();
+        return Optional.of(new TaskLease(
+                issued.id(), issued.task(), issued.system(), issued.hours(), issued.issuedAt(), issued.expiresAt(), tail(tail)));
+    }
+
+    static String tail(String raw) {
+        return raw != null && raw.matches("[A-Z0-9]{4}") ? raw : "";
     }
 
     static boolean safeTask(String task) {

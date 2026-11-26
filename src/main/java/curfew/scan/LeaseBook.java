@@ -35,11 +35,15 @@ public class LeaseBook {
     }
 
     public Optional<TaskLease> issue(String task, String system, int hours, Instant now) {
+        return issue(task, system, hours, now, "");
+    }
+
+    public Optional<TaskLease> issue(String task, String system, int hours, Instant now, String tail) {
         if (leases.size() >= CAP) {
             return Optional.empty();
         }
         String id = uniqueId(slug(task));
-        Optional<TaskLease> lease = LeaseTerm.issue(id, task, system, hours, now);
+        Optional<TaskLease> lease = LeaseTerm.issue(id, task, system, hours, now, tail);
         lease.ifPresent(leases::add);
         return lease;
     }
@@ -51,6 +55,9 @@ public class LeaseBook {
             String until = lease.open(now)
                     ? lease.system() + " · " + lease.hours() + " horas · vale até " + when
                     : lease.system() + " · acabou às " + when;
+            if (!lease.tail().isBlank()) {
+                until = until + " · finais " + lease.tail();
+            }
             views.add(new LeaseView(lease.task(), until));
         }
         return List.copyOf(views);

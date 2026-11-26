@@ -29,7 +29,7 @@ Abra `http://127.0.0.1:8473/`. Estados da fila: `/?estado=vazio`, `/?estado=carr
 - Tokens evitados: `TokenLedger` (o contador de chamadas de modelo permanece zero)
 - Log ao vivo: `GET /varredura/eventos`. Cada linha leva sistema, idade, dono e ação. Sem segredo.
 - Passagem da noite: `POST /noite` com `confirmo=sim`. Sem `CURFEW_CLOSE=sim`, só muda a fila local. Com essa variável e `CURFEW_GITHUB_TOKEN`, apaga webhook, chave de deploy e nome de segredo. Produção pede um humano. Não defina `CURFEW_CLOSE` sem um sim explícito.
-- Chave com prazo: `POST /chaves`. No máximo 23 horas. O exemplo não emite segredo e não chama a conta.
+- Chave com prazo: `POST /chaves`. No máximo 23 horas. O formulário não emite segredo. Com `Accept: application/json` e `CURFEW_ISSUE=sim`, a API pede uma sessão AWS e devolve o valor uma vez. A fila guarda só os quatro finais. Não defina `CURFEW_ISSUE` sem um sim explícito.
 - Prova no ar: `python3 .cursor/skills/verify-curfew/verify-curfew.py prove`. O comando sobe a instância, lê a varredura e guarda o print.
 - Telas: `src/main/resources/templates/Pages/` e `src/main/resources/META-INF/resources/app.css`
 - Filtro no navegador: `app.js`. O log da varredura lê `GET /varredura/eventos`.
