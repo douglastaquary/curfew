@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Curfew — acessos que o agente deixou valendo</title>
+    <meta name="description" content="A Curfew coloca no fluxo de segurança da informação os acessos que um agente de IA deixou valendo: token, chave, webhook e senha no log.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230f5c4c'/%3E%3Cpath d='M10 15V12a6 6 0 0 1 12 0v3' fill='none' stroke='%23fffdf8' stroke-width='2'/%3E%3Crect x='8' y='15' width='16' height='10' fill='%23fffdf8'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="site.css">
+</head>
+<body>
+    <header class="wrap top">
+        <a class="mark" href="#topo">Curfew</a>
+        <nav>
+            <a href="#beneficios">Benefícios</a>
+            <a href="#fluxo">Fluxo</a>
+            <a href="#telas">Telas</a>
+        </nav>
+    </header>
+
+    <main id="topo">
+        <section class="wrap hero">
+            <p class="kicker">Segurança da informação</p>
+            <h1>O agente terminou. O acesso continuou valendo.</h1>
+            <p class="lede">Token de GitHub, chave de AWS, webhook e senha escrita no log da sessão ficam abertos depois da tarefa. A Curfew coloca essa sobra na fila que o time de segurança já deveria ver: idade, dono e a ação. O valor do segredo não entra na fila.</p>
+            <div class="hero-actions">
+                <a class="button" href="#telas">Ver a fila</a>
+                <a class="button quiet" href="#beneficios">O que a empresa ganha</a>
+            </div>
+        </section>
+
+        <section class="wrap band" id="beneficios">
+            <h2>O que muda para quem integra no fluxo</h2>
+            <p class="section-note">A ferramenta entra onde a segurança da informação já decide o que continua aberto. Não é mais uma lista que alguém monta na sexta.</p>
+            <div class="benefits">
+                <article class="card">
+                    <h3>Fluxo de segurança da informação</h3>
+                    <p>Cada acesso esquecido vira uma linha com sistema, idade, dono e ação: revogar, expirar, desligar, reduzir, apagar do texto ou trancar e pedir um humano. Plataforma executa. Segurança vê a fila com data.</p>
+                </article>
+                <article class="card">
+                    <h3>Vulnerabilidade de dados</h3>
+                    <p>A janela é o tempo em que o acesso segue válido. Um token de 18 dias sem dono, uma chave de 11 e uma permissão de admin de 27 dias continuam abrindo GitHub e AWS depois que o pull request já entrou.</p>
+                </article>
+                <article class="card">
+                    <h3>Vazamento de dado sensível</h3>
+                    <p>Senha no log do agente e chave ainda capaz de ler a conta são vazamento em curso. A linha aponta o texto e a chave. <strong>O segredo em si não é copiado</strong> para a fila, o log ou a URL.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="wrap band" id="fluxo">
+            <h2>Como a sobra entra na fila</h2>
+            <p class="section-note">A leitura é o primeiro passo. Fechar o acesso só acontece quando a empresa autoriza essa ação.</p>
+            <ol class="steps">
+                <li>
+                    <h3>A tarefa acaba</h3>
+                    <p>O agente usou um token, uma chave ou um webhook e ninguém recolheu.</p>
+                </li>
+                <li>
+                    <h3>A leitura lista</h3>
+                    <p>GitHub e AWS entram em modo leitura. A regra classifica idade, dono e escopo.</p>
+                </li>
+                <li>
+                    <h3>A fila mostra a ação</h3>
+                    <p>Cada linha já diz o que fazer. Produção trava e espera um humano.</p>
+                </li>
+                <li>
+                    <h3>O segredo fica de fora</h3>
+                    <p>A empresa vê o acesso. Não vê o valor da chave, do token ou da senha.</p>
+                </li>
+            </ol>
+        </section>
+
+        <section class="wrap band" id="telas">
+            <h2>Telas desta versão</h2>
+            <p class="section-note">Dados fictícios. Nada é lido de uma conta real e nada é fechado. O log da varredura chega linha a linha, no horário de Brasília.</p>
+            <div class="shots">
+                <figure>
+                    <img src="prints/fila.png" alt="Fila da Curfew com seis acessos fictícios e a ação de cada um.">
+                    <figcaption><strong>Fila.</strong> Token, webhook, chave, permissão, senha no log e recurso, cada um com a ação.</figcaption>
+                </figure>
+                <figure>
+                    <img src="prints/detalhe.png" alt="Detalhe de um token do GitHub sem dono, aberto há 18 dias, com a ação revogar.">
+                    <figcaption><strong>Detalhe.</strong> Idade, dono e o motivo da ação, sem o valor do segredo.</figcaption>
+                </figure>
+                <figure>
+                    <img src="prints/varredura.png" alt="Tela de varredura com contadores e o log ao vivo da leitura.">
+                    <figcaption><strong>Varredura.</strong> O log acompanha cada acesso. Seis itens, zero chamadas de modelo, 720 tokens evitados.</figcaption>
+                </figure>
+                <figure>
+                    <img src="prints/conexoes.png" alt="Tela de conexões com GitHub e AWS ainda sem leitura ligada.">
+                    <figcaption><strong>Conexões.</strong> GitHub e AWS ainda sem leitura. Nesta versão nenhuma conta real é ligada.</figcaption>
+                </figure>
+            </div>
+            <div class="limit">
+                <p>Esta versão é a fila para aprovação. Conector, credencial de cliente, deploy e fechamento de acesso ficam para o corte seguinte, com um sim explícito.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="wrap foot">
+        <p>Curfew. Acessos que o agente deixou valendo.</p>
+    </footer>
+</body>
+</html>

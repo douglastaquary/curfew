@@ -1,19 +1,50 @@
 # Curfew
 
-Fila dos acessos que um agente de IA deixou valendo. Este corte só mostra dados fictícios. Nada é lido de uma conta real e nada é fechado.
+Fila dos acessos que um agente de IA deixou valendo: token, chave, webhook, permissão larga e senha no log. Este corte mostra dados fictícios. Nada é lido de uma conta real e nada é fechado.
 
-O plano de produto está em [docs/plano.md](docs/plano.md).
+O plano de produto está em [docs/plano.md](docs/plano.md). A página do produto está em [docs/index.html](docs/index.html).
+
+## Telas
+
+Fila.
+
+![Fila de acessos esquecidos](docs/prints/fila.png)
+
+Fila vazia, carregando e com erro.
+
+![Fila vazia](docs/prints/fila-vazia.png)
+![Fila carregando](docs/prints/fila-carregando.png)
+![Fila com erro](docs/prints/fila-erro.png)
+
+Detalhe de um acesso.
+
+![Detalhe de um token](docs/prints/detalhe.png)
+
+Varredura, com o log ao vivo.
+
+![Varredura com log ao vivo](docs/prints/varredura.png)
+
+Conexões ainda sem leitura.
+
+![Conexões](docs/prints/conexoes.png)
+
+A fila e a varredura no celular.
+
+![Fila no celular](docs/prints/fila-mobile.png)
+![Varredura no celular](docs/prints/varredura-mobile.png)
+
+## Página no GitHub Pages
+
+A landing fica em `docs/`. No GitHub, em Settings, Pages, a origem é GitHub Actions. O workflow `.github/workflows/pages.yml` publica a pasta `docs` a cada push na `main` que mude essa pasta.
 
 ## Instalação
 
-É preciso Java 21. O Maven vem no wrapper do repositório. Não é preciso instalar Maven à parte.
+É preciso Java 21. O Maven vem no wrapper.
 
 ```bash
 java -version
 ./mvnw -version
 ```
-
-AWS CLI e SAM só entram num deploy futuro. Não rode `sam deploy` neste corte.
 
 ## Build e execução
 
@@ -25,48 +56,26 @@ AWS CLI e SAM só entram num deploy futuro. Não rode `sam deploy` neste corte.
 
 O dev sobe em [http://127.0.0.1:8473/](http://127.0.0.1:8473/).
 
-O pacote Lambda, quando o build termina, fica em `target/function.zip`. O script `./build-lambda.sh` faz esse pacote e falha se o zip não aparecer. Gerar o zip não publica nada.
+Telas: `/` fila, `/acessos/gh-token-18` detalhe, `/varredura` log ao vivo, `/conexoes`. Os estados de exemplo são `/?estado=vazio`, `/?estado=carregando` e `/?estado=erro`.
 
-Telas:
-
-- `/` fila
-- `/acessos/gh-token-18` detalhe
-- `/varredura` contagem de itens, tokens evitados e o log ao vivo da leitura
-- `/conexoes` GitHub e AWS ainda sem leitura
-- `/?estado=vazio`, `/?estado=carregando`, `/?estado=erro`
+`./mvnw package` gera `target/function.zip`. Gerar o zip não publica nada. Não rode `sam deploy` neste corte.
 
 ## Erros comuns
-
-**Java ausente ou antigo.** `java -version` precisa mostrar 21. Sem isso, o `mvnw` para na compilação.
-
-**Porta 8473 ocupada.** Outro processo já escuta essa porta. Encerre esse processo ou mude `quarkus.http.port` em `src/main/resources/application.properties`.
-
-**`./mvnw` sem permissão.** Rode `chmod +x mvnw` e tente de novo.
-
-**SAM ausente.** Só importa se alguém tentar `sam build` ou `sam deploy`. O dev e os testes não usam SAM. Deploy fica para depois da autenticação.
-
-**Wrapper sem rede na primeira vez.** O `mvnw` baixa o Maven na primeira execução. Sem rede, essa etapa falha. As seguintes usam o que já foi baixado.
-
-## Troubleshooting
 
 | Sintoma | O que fazer |
 | --- | --- |
 | `release version 21 not supported` | Instale o JDK 21 e confira `JAVA_HOME`. |
-| `Address already in use` | A porta 8473 está presa. Veja o erro de porta acima. |
-| `target/function.zip não foi gerado` | Rode `./mvnw package` e leia o erro do Quarkus antes do script. |
-| Página em branco | Confira se o dev ainda está de pé e se a URL é a porta 8473. |
-| Teste de página falha procurando texto | O mock mudou. Ajuste `MockAccessSource` e o teste juntos. |
+| `Address already in use` | A porta 8473 está presa. Encerre o outro processo ou mude `quarkus.http.port`. |
+| `./mvnw` sem permissão | Rode `chmod +x mvnw`. |
+| Wrapper falha na primeira vez | O `mvnw` baixa o Maven. Sem rede, essa etapa falha. |
+| Página em branco | Confira se o dev ainda está de pé na porta 8473. |
 
 ## Desenvolvimento
 
-A fila fictícia está em `src/main/java/curfew/scan/MockAccessSource.java`. As regras estão em `ScanRules`. A engine limita quantas classificações correm ao mesmo tempo. `TokenLedger` conta tokens que um modelo teria gasto. Neste corte as chamadas de modelo são zero.
+A fila fictícia está em `src/main/java/curfew/scan/MockAccessSource.java`. As regras estão em `ScanRules`. `TokenLedger` conta tokens que um modelo teria gasto. Neste corte as chamadas de modelo são zero.
 
-Em dev e teste a fila fica na memória. O perfil de produção usa DynamoDB, tabela `curfew-access`, descrita em `template.yaml`. O contrato é o mesmo. Não há campo para o valor de um segredo.
+O log ao vivo sai de `GET /varredura/eventos`. Cada linha leva sistema, idade, dono e ação. Sem segredo.
 
-As telas são templates Qute em `src/main/resources/templates/Pages/` e o visual está em `src/main/resources/META-INF/resources/app.css`. O `app.js` só filtra a tabela no navegador. Ele não chama a rede.
+Em dev e teste a fila fica na memória. O perfil de produção usa DynamoDB, tabela `curfew-access`, em `template.yaml`. Não há campo para o valor de um segredo.
 
-Para um agente, a skill em `.cursor/skills/curfew/SKILL.md` e o `AGENTS.md` repetem o limite deste corte.
-
-## O que não entra aqui
-
-Conta real, conector, credencial de cliente, deploy e modelo. As chaves `dev-not-a-secret` no `application.properties` são fictícias para o SDK subir em dev e teste. Não as troque por uma chave real. Não escreva token, chave ou senha em log, URL, teste ou template.
+Para um agente, `.cursor/skills/curfew/SKILL.md` e `AGENTS.md` repetem o limite deste corte: sem conector, sem credencial de cliente, sem deploy e sem fechar acesso até um sim explícito.
