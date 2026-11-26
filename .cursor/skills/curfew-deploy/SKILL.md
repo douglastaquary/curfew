@@ -17,6 +17,8 @@ Rode na raiz do clone. Não imprima access key, token nem `CURFEW_GATE`. Não ap
 
 ## Publicar
 
+Antes do pacote, rode `./mvnw -version`. A linha `Java version` precisa ser 21 ou mais nova. Se `generate-code` falhar com `NoSuchElementException`, o Maven está num JDK antigo. Não mexa no código. No Mac, `export JAVA_HOME="$(/usr/libexec/java_home -v 21)"` e rode `./mvnw -version` de novo.
+
 `CURFEW_GATE` tem 16 caracteres ou mais e fica só no ambiente desta execução. Não grave em `samconfig.toml`.
 
 ```bash

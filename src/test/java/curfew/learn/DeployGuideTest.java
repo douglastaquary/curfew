@@ -26,4 +26,16 @@ class DeployGuideTest {
         assertFalse(config.contains("GateSecret"));
         assertFalse(guide.contains("é `aws login`"));
     }
+
+    @Test
+    void packageRunsOnJava21() throws Exception {
+        String pom = Files.readString(Path.of("pom.xml"));
+        String guide = Files.readString(Path.of("docs/deploy.md"));
+        String skill = Files.readString(Path.of(".cursor/skills/curfew-deploy/SKILL.md"));
+
+        assertTrue(pom.contains("<version>[21,)</version>"));
+        assertTrue(guide.contains("NoSuchElementException"));
+        assertTrue(guide.contains("./mvnw -version"));
+        assertTrue(skill.contains("NoSuchElementException"));
+    }
 }

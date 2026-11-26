@@ -83,6 +83,7 @@ Como ligar GitHub, AWS, CI e o servidor está em [docs/conectar.md](docs/conecta
 | Sintoma | O que fazer |
 | --- | --- |
 | `release version 21 not supported` | Instale o JDK 21 e confira `JAVA_HOME`. |
+| `generate-code` com `NoSuchElementException` | O `./mvnw` está num JDK antigo. Rode `./mvnw -version`. No Mac, `export JAVA_HOME="$(/usr/libexec/java_home -v 21)"`. |
 | `Address already in use` | A porta 8473 está presa. Encerre o outro processo ou mude `quarkus.http.port`. |
 | `./mvnw` sem permissão | Rode `chmod +x mvnw`. |
 | Wrapper falha na primeira vez | O `mvnw` baixa o Maven. Sem rede, essa etapa falha. |

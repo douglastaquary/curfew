@@ -12,7 +12,21 @@ Se o erro for `Profile 'default' is already configured with Access Key credentia
 
 Se o ARN contiver `curfew-leitura`, pare. Esse usuário só tem `iam:ListAccessKeys` e não publica a stack.
 
-Com a identidade de publicação confirmada:
+Com a identidade de publicação confirmada, confira o Java que o Maven usa. A linha `Java version` precisa ser 21 ou mais nova. `java -version` sozinho não basta: o `./mvnw` segue o `JAVA_HOME`.
+
+```bash
+./mvnw -version
+```
+
+No Mac, se essa linha for 8, 11 ou 17:
+
+```bash
+/usr/libexec/java_home -V
+export JAVA_HOME="$(/usr/libexec/java_home -v 21)"
+./mvnw -version
+```
+
+Se `generate-code` falhar com `NoSuchElementException`, é esse JDK antigo. Não é o código da Curfew.
 
 ```bash
 ./mvnw -q package
@@ -39,5 +53,6 @@ O zip é `target/function.zip`. Gerar o zip não publica.
 | 26 nov 2026, 00:20, Brasília | CLI 2.42.4 instalada. `aws sts get-caller-identity` saiu 253, `NoCredentials` | A mensagem pede `aws login`. Não há chave para publicar a stack. A função não foi criada. |
 | 26 nov 2026, 00:21, Brasília | SAM CLI 1.174.1. `sam validate` aceitou o template. O zip ficou em 34 MB. `sam deploy` saiu 1, `Unable to locate credentials` | O artefato está pronto. A conta AWS é o que falta. |
 | 26 nov 2026, 08:07, Brasília | `aws login` recusou: `Profile 'default' is already configured with Access Key credentials` | O perfil default já tem access key. Não apague a credencial do perfil default. O passo é `aws sts get-caller-identity`, não um login novo. |
+| 26 nov 2026, 08:19, Brasília | `./mvnw -q package` falhou em `generate-code` com `NoSuchElementException` | O Maven não estava no Java 21. Confira `./mvnw -version` e o `JAVA_HOME`. |
 
 Não cole a access key no chat. A skill que o próximo agente segue é `.cursor/skills/curfew-deploy/SKILL.md`.
