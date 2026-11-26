@@ -17,7 +17,7 @@ Rode na raiz do clone. Não imprima access key, token nem `CURFEW_GATE`. Não ap
 
 ## Publicar
 
-Antes do `sam deploy`, rode `sam --version`. Se o erro for `No module named 'pygments'`, o CLI está incompleto no Python 3.12 de `/usr/local`. Rode `python3.12 -m pip install --break-system-packages pygments` e confira `sam --version` de novo. Se o `pip` disser `externally-managed-environment`, a flag é o caminho. Não crie um venv: o `sam` já instalado não entra nele. Não é falha da conta AWS. No macOS 12, não rode `brew reinstall aws-sam-cli` e não apague as Command Line Tools. O Homebrew recusa essas ferramentas nesse sistema.
+Antes do `sam deploy`, rode `sam --version`. A versão 1.132.0 já passou nesse Mac. Se o erro for `No module named 'pygments'`, o CLI está incompleto no Python 3.12 de `/usr/local`. Rode `python3.12 -m pip install --break-system-packages pygments` e confira `sam --version` de novo. Se o `pip` disser `externally-managed-environment`, a flag é o caminho. Não crie um venv: o `sam` já instalado não entra nele. Não é falha da conta AWS. No macOS 12, não rode `brew reinstall aws-sam-cli` e não apague as Command Line Tools. O Homebrew recusa essas ferramentas nesse sistema. Quando `sam --version` imprimir a versão, não reinstale. Siga para o pacote.
 
 Antes do pacote, rode `./mvnw -version`. A linha `Java version` precisa ser 21 ou mais nova. Se o runtime contiver `jbr-17`, é o Java 17 do IntelliJ. Não empacote com ele. No Mac, instale com `brew install --cask temurin@21`, depois `export JAVA_HOME="$(/usr/libexec/java_home -v 21)"`. Se `generate-code` falhar com `NoSuchElementException`, é esse JDK antigo. Não mexa no código.
 

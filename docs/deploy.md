@@ -69,5 +69,6 @@ O zip é `target/function.zip`. Gerar o zip não publica.
 | 26 nov 2026, 08:34, Brasília | `sam` morreu com `No module named 'pygments'` | O CLI está no Python 3.12 de `/usr/local` sem essa biblioteca. `python3.12 -m pip install pygments` e depois `sam --version`. |
 | 26 nov 2026, 08:39, Brasília | `brew reinstall aws-sam-cli` disse que as Command Line Tools não suportam macOS 12 | Não reinstale por aí e não apague as ferramentas. O `sam` já existe. Falta o `pygments`. |
 | 26 nov 2026, 08:42, Brasília | `python3.12 -m pip install pygments` respondeu `externally-managed-environment` | Esse Python é do Homebrew. Use `--break-system-packages`. Um venv não alcança o `sam` já instalado. |
+| 26 nov 2026, 08:43, Brasília | `sam --version` imprimiu `SAM CLI, version 1.132.0` | O CLI passou. Não reinstale. Siga para o pacote no Java 21 e para o deploy. |
 
 Não cole a access key no chat. A skill que o próximo agente segue é `.cursor/skills/curfew-deploy/SKILL.md`.
