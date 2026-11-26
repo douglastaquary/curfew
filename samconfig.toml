@@ -1,5 +1,5 @@
 version = 0.1
-# GateSecret não fica neste arquivo. Passe na hora do deploy.
+# O segredo da porta não fica neste arquivo. Passe na hora do deploy.
 
 [default.deploy.parameters]
 stack_name = "curfew"

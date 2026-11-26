@@ -6,7 +6,13 @@ Custo neste tamanho, us-east-1, uso ocasional: HTTP API a US$ 1,00 por milhão d
 
 ## Como publicar
 
-Na máquina que já tem identidade AWS, na raiz do repositório:
+Na raiz do clone, primeiro `aws sts get-caller-identity`. Se sair 0, use esse perfil. Não rode `aws login`.
+
+Se o erro for `Profile 'default' is already configured with Access Key credentials`, pare. Não apague a credencial do perfil default. Não crie outro perfil. O perfil default já tem access key. Rode `aws sts get-caller-identity`.
+
+Se o ARN contiver `curfew-leitura`, pare. Esse usuário só tem `iam:ListAccessKeys` e não publica a stack.
+
+Com a identidade de publicação confirmada:
 
 ```bash
 ./mvnw -q package
@@ -32,5 +38,6 @@ O zip é `target/function.zip`. Gerar o zip não publica.
 | 26 nov 2026, 00:12, Brasília | `aws` ausente, exit 127, `command not found` | Não havia `~/.aws` nem variável `AWS_*`. A conta do GitHub também não tinha secret de deploy. |
 | 26 nov 2026, 00:20, Brasília | CLI 2.42.4 instalada. `aws sts get-caller-identity` saiu 253, `NoCredentials` | A mensagem pede `aws login`. Não há chave para publicar a stack. A função não foi criada. |
 | 26 nov 2026, 00:21, Brasília | SAM CLI 1.174.1. `sam validate` aceitou o template. O zip ficou em 34 MB. `sam deploy` saiu 1, `Unable to locate credentials` | O artefato está pronto. A conta AWS é o que falta. |
+| 26 nov 2026, 08:07, Brasília | `aws login` recusou: `Profile 'default' is already configured with Access Key credentials` | O perfil default já tem access key. Não apague a credencial do perfil default. O passo é `aws sts get-caller-identity`, não um login novo. |
 
-A publicação para aqui até existir uma identidade AWS nesta máquina. O passo seguinte, na conta que vai receber a Curfew, é `aws login` ou um perfil já configurado. Não cole a access key no chat. Com a identidade pronta, rode o comando de publicar acima.
+Não cole a access key no chat. A skill que o próximo agente segue é `.cursor/skills/curfew-deploy/SKILL.md`.

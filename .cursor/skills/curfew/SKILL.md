@@ -44,4 +44,4 @@ A leitura real está em `curfew.read`. Sem variável, a fila continua o exemplo.
 
 ## Parar
 
-A publicação precisa de identidade AWS e de `GateSecret`. Sem os dois, pare e registre o erro em `docs/deploy.md`. Não defina `CURFEW_CLOSE`, `CURFEW_ISSUE` ou modelo sem um sim explícito. Não grave credencial no repositório. Se o layout dos prints for reprovado, o corte seguinte pode testar TypeScript compilado para um `app.js` dentro do mesmo JAR.
+A publicação segue `.cursor/skills/curfew-deploy/SKILL.md`. Comece por `aws sts get-caller-identity`. Se o perfil default já tem access key, não rode `aws login` e não apague a credencial. Sem identidade ou sem `CURFEW_GATE`, pare e registre o erro em `docs/deploy.md`. Não defina `CURFEW_CLOSE`, `CURFEW_ISSUE` ou modelo sem um sim explícito. Não grave credencial no repositório. Se o layout dos prints for reprovado, o corte seguinte pode testar TypeScript compilado para um `app.js` dentro do mesmo JAR.

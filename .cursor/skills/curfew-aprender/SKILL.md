@@ -19,10 +19,10 @@ O plugin está em `plugins/pstack`, com a licença MIT de Lauren Tan. A skill é
 - Fix Root Causes. O conserto é na primeira causa, não num comentário em volta.
 - Sequence Work into Verifiable Units. Cada passo termina em `./mvnw test` ou na rota no ar antes do próximo.
 - Build the Lever. `LearningLedgerTest` é a ferramenta que o próximo agente roda de novo.
-- Never Block on the Human para trabalho reversível. Pare em `sam deploy`, apagar dado e fechar acesso.
+- Never Block on the Human para trabalho reversível. Pare em apagar dado e fechar acesso. Deploy segue `.cursor/skills/curfew-deploy/SKILL.md`.
 - No is an acceptable answer. Se o pedido sai do corte, diga isso.
 
-Quando um playbook e o limite da Curfew discordam, o limite ganha. Não rode `sam deploy`, não feche acesso e não grave credencial de cliente. O merge automático dos playbooks de fábrica continua fechado até um sim explícito.
+Quando um playbook e o limite da Curfew discordam, o limite ganha. Não feche acesso, não apague credencial já configurada e não grave credencial de cliente. Deploy só pela skill `curfew-deploy`, depois de `aws sts get-caller-identity`. O merge automático dos playbooks de fábrica continua fechado até um sim explícito.
 
 ## Mapa
 
@@ -64,7 +64,7 @@ Se a correção já cabe num assert que roda, não repita a regra nesta skill.
 
 ## Publicar
 
-O push vai para `origin`, https://github.com/douglastaquary/curfew. Não envie para o repositório do Cursor. Não rode `sam deploy`.
+O push vai para `origin`, https://github.com/douglastaquary/curfew. Não envie para o repositório do Cursor. Deploy AWS segue `.cursor/skills/curfew-deploy/SKILL.md`. Não rode `aws login` quando o perfil default já tem access key.
 
 A landing sobe por `.github/workflows/pages.yml` quando `docs/` muda. Os testes sobem por `.github/workflows/test.yml` em todo push na `main`.
 
