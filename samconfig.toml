@@ -1,0 +1,9 @@
+version = 0.1
+# GateSecret não fica neste arquivo. Passe na hora do deploy.
+
+[default.deploy.parameters]
+stack_name = "curfew"
+resolve_s3 = true
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = false

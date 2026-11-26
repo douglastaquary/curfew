@@ -227,6 +227,30 @@ figcaption { padding: 12px 14px; color: var(--muted); font-size: 0.92rem; }
 
 figcaption strong { color: var(--ink); }
 
+.connect { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+
+.connect li {
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 16px 18px;
+}
+
+.connect strong { color: var(--ink); }
+
+.connect code, .policy {
+    font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", monospace;
+    font-size: 0.84rem;
+}
+
+.policy {
+    margin: 12px 0 0;
+    padding: 14px 16px;
+    background: var(--ink);
+    color: var(--paper);
+    overflow-x: auto;
+    white-space: pre;
+}
+
 .foot {
     margin-top: 56px;
     padding: 22px 0 40px;

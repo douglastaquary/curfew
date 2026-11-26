@@ -5,7 +5,6 @@ target/
 .classpath
 .project
 .settings/
-samconfig.toml
 .aws-sam/
 .cursor/skills/verify-curfew/run/
 scratch/

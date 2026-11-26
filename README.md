@@ -74,7 +74,9 @@ A passagem da noite aparece em `/varredura`. O botão tira da fila o que não pe
 
 A chave com prazo aparece na fila. A tarefa pede GitHub ou AWS e recebe no máximo 23 horas. O formulário mostra a validade e não emite o segredo. 24 horas ou mais é recusado. Para pedir a sessão AWS de verdade, envie `POST /chaves` com `Accept: application/json` e exporte `CURFEW_ISSUE=sim` junto com o par `CURFEW_AWS_ACCESS_KEY_ID` e `CURFEW_AWS_SECRET_ACCESS_KEY`. A resposta traz o segredo uma vez. A página seguinte mostra só os quatro finais.
 
-`./mvnw package` gera `target/function.zip`. Gerar o zip não publica nada. Não rode `sam deploy` neste corte.
+`./mvnw package` gera `target/function.zip`. Gerar o zip não publica nada. A publicação está em [docs/deploy.md](docs/deploy.md). A função só sobe com o parâmetro `GateSecret`. Token de cliente, `CURFEW_CLOSE` e `CURFEW_ISSUE` não entram no template.
+
+Como ligar GitHub, AWS, CI e o servidor está em [docs/conectar.md](docs/conectar.md). A leitura pede cinco repositórios e as access keys do próprio usuário IAM. Não é GitHub App e não é role assumida.
 
 ## Erros comuns
 

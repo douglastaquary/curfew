@@ -28,3 +28,4 @@ Cada linha cita um teste que trava a correção. `LearningLedgerTest` falha se a
 | A sessão AWS armada não entra na fila | `LeaseDeliveryTest.armedSessionStaysOutOfTheQueue` |
 | Chave AWS em branco não pede sessão | `StsSessionMintTest.blankKeysDoNotCallTheAccount` |
 | Toda chave aceita acaba antes de um dia e a noite desarmada conserva quem pede humano | `LeaseAndNightPropertyTest.everyLeaseEndsInsideADayAndTheQueueHidesTheSecret` |
+| Produção sem segredo de porta fica fechada, e o segredo não volta na página | `GateDecisionTest.prodWithoutASecretStaysLocked` |

@@ -15,6 +15,26 @@
             <span>{aws}</span>
         </li>
     </ul>
-    <p class="footnote">Quando a leitura existir, ela dura uma hora por varredura. O cliente desliga apagando o app e a role.</p>
+    <h2>Como a leitura entra</h2>
+    <p>A Curfew não instala um app no GitHub e não assume uma role. O processo chama a API com o que estiver no ambiente dele.</p>
+    <ol class="connect">
+        <li>
+            <strong>GitHub.</strong>
+            O token fica em <code>CURFEW_GITHUB_TOKEN</code>. A leitura pede os cinco repositórios mais recentemente atualizados que esse token enxerga e, em cada um, metadado de webhook, nome de secret de Actions e chave de deploy.
+        </li>
+        <li>
+            <strong>AWS.</strong>
+            O par fica em <code>CURFEW_AWS_ACCESS_KEY_ID</code> e <code>CURFEW_AWS_SECRET_ACCESS_KEY</code>. A chamada é <code>iam:ListAccessKeys</code> no próprio usuário dessa chave. Entram idade, status e quatro finais. As chaves dos outros usuários da conta não entram.
+        </li>
+        <li>
+            <strong>CI.</strong>
+            Não há receptor de pipeline. O que aparece de CI são os nomes dos secrets de GitHub Actions nesses cinco repositórios. O valor do secret não entra.
+        </li>
+        <li>
+            <strong>Servidor.</strong>
+            As variáveis ficam no ambiente da função ou da máquina. Não vão para o git, a página nem a tabela. Apagar o token e a access key desliga a leitura.
+        </li>
+    </ol>
+    <p class="footnote">A passagem da noite e a sessão AWS continuam desligadas até um sim separado.</p>
 {/body}
 {/include}

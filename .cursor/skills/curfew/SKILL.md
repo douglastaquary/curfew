@@ -5,7 +5,7 @@ description: Trabalhar no repositório Curfew sem sair do corte aprovado. Use qu
 
 # Curfew
 
-A aplicação é Quarkus, Java 21, HTML Qute e JavaScript puro. Um JAR só. Lambda e DynamoDB estão descritos no `template.yaml` e não são usados neste corte.
+A aplicação é Quarkus, Java 21, HTML Qute e JavaScript puro. Um JAR só. Lambda, HTTP API e DynamoDB estão em `template.yaml`. A função de produção só atende com `CURFEW_GATE`. O guia de conexão é `docs/conectar.md`. O deploy é `docs/deploy.md`.
 
 ## Subir
 
@@ -44,4 +44,4 @@ A leitura real está em `curfew.read`. Sem variável, a fila continua o exemplo.
 
 ## Parar
 
-Não faça deploy, modelo ou fechamento de acesso sem um sim explícito de quem mantém o projeto. Não grave credencial no repositório. Se o layout dos prints for reprovado, o corte seguinte pode testar TypeScript compilado para um `app.js` dentro do mesmo JAR.
+A publicação precisa de identidade AWS e de `GateSecret`. Sem os dois, pare e registre o erro em `docs/deploy.md`. Não defina `CURFEW_CLOSE`, `CURFEW_ISSUE` ou modelo sem um sim explícito. Não grave credencial no repositório. Se o layout dos prints for reprovado, o corte seguinte pode testar TypeScript compilado para um `app.js` dentro do mesmo JAR.

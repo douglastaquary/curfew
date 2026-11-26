@@ -1,13 +1,13 @@
 # Agentes neste repositório
 
-O corte atual é a fila, a passagem da noite e a chave com prazo. A chave da tarefa acaba em menos de 24 horas. O formulário não emite segredo. A sessão AWS só sai em `POST /chaves` com `Accept: application/json` e `CURFEW_ISSUE=sim`, e o valor não fica na fila. Não defina `CURFEW_ISSUE` sem um sim que diga isso. Sem `CURFEW_CLOSE=sim`, executar a passagem só tira da fila local o que não pede humano e não chama a conta. Com `CURFEW_CLOSE=sim` e `CURFEW_GITHUB_TOKEN`, a passagem apaga webhook, chave de deploy e nome de segredo no GitHub. Produção continua pedindo um humano. Sem variável de leitura, a fila é o exemplo. Não avance para modelo ou deploy, e não defina `CURFEW_CLOSE`, sem um sim que diga isso.
+O corte atual é a fila, a passagem da noite, a chave com prazo e a porta de produção. A chave da tarefa acaba em menos de 24 horas. O formulário não emite segredo. A sessão AWS só sai em `POST /chaves` com `Accept: application/json` e `CURFEW_ISSUE=sim`, e o valor não fica na fila. Não defina `CURFEW_ISSUE` sem um sim que diga isso. Sem `CURFEW_CLOSE=sim`, executar a passagem só tira da fila local o que não pede humano e não chama a conta. Com `CURFEW_CLOSE=sim` e `CURFEW_GITHUB_TOKEN`, a passagem apaga webhook, chave de deploy e nome de segredo no GitHub. Produção continua pedindo um humano. Sem variável de leitura, a fila é o exemplo. A publicação usa `template.yaml` e exige `GateSecret`. Sem identidade AWS, não invente uma conta. Não avance para modelo, e não defina `CURFEW_CLOSE`, sem um sim que diga isso.
 
 Correção vira teste. O ciclo de desenvolver, corrigir, publicar e aprender está em `.cursor/skills/curfew-aprender/SKILL.md`. O plugin pstack está em `plugins/pstack`. Os playbooks estão em `plugins/pstack/skills/poteto-mode/playbooks/`. Quando um playbook e o limite deste corte discordam, o limite ganha. Cada ajuste em `docs/aprendizado.md` cita um método que `LearningLedgerTest` confere. A fábrica de agentes, com merge sozinho ou varredura a cada release, continua fechada.
 
 Fora deste corte, até esse sim:
 
 - Credencial gravada no repositório
-- Deploy (`sam deploy`)
+- `CURFEW_CLOSE` e `CURFEW_ISSUE` no template ou no ambiente, sem um sim
 - Modelo de linguagem
 - Fechar, revogar ou apagar qualquer acesso
 

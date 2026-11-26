@@ -16,6 +16,7 @@
                 <a href="#mercado">Mercado</a>
                 <a href="#produto">Produto</a>
                 <a href="#telas">Telas</a>
+                <a href="#conectar">Conectar</a>
             </nav>
         </div>
     </header>
@@ -142,6 +143,43 @@
                     <figcaption><strong>Conexões.</strong> GitHub e AWS só leem quando a variável existe.</figcaption>
                 </figure>
             </div>
+        </section>
+
+        <section class="wrap band" id="conectar">
+            <h2>Como conectar a empresa</h2>
+            <p class="section-note">A varredura é quatro leituras HTTP no GitHub e uma chamada IAM. Não há app do GitHub, não há role assumida e não há receptor de CI.</p>
+            <ol class="connect">
+                <li>
+                    <h3>GitHub, cinco repositórios</h3>
+                    <p>Crie um fine-grained personal access token com acesso só aos repositórios que importam. Permissões de leitura: Metadata, Administration e Secrets. Coloque o token na variável <code>CURFEW_GITHUB_TOKEN</code> do processo da Curfew, não no git.</p>
+                    <p>A Curfew chama <code>GET /user/repos?per_page=5&amp;sort=pushed</code> e, em cada repositório, <code>/hooks</code>, <code>/actions/secrets</code> e <code>/keys</code>. Entram nome, idade e dono. URL, material de chave e valor de secret são descartados.</p>
+                </li>
+                <li>
+                    <h3>AWS, as chaves desse usuário</h3>
+                    <p>Crie um usuário IAM, por exemplo <code>curfew-leitura</code>, com uma única permissão: <code>iam:ListAccessKeys</code> nele mesmo. Gere uma access key e coloque o par em <code>CURFEW_AWS_ACCESS_KEY_ID</code> e <code>CURFEW_AWS_SECRET_ACCESS_KEY</code>.</p>
+                    <p>A chamada lista as chaves desse usuário, não as dos outros usuários da conta. A fila guarda status, idade, nome e quatro finais.</p>
+                </li>
+                <li>
+                    <h3>CI, só o nome do secret</h3>
+                    <p>Um workflow não se registra na Curfew. O que a leitura vê de CI são os nomes dos secrets de GitHub Actions nos cinco repositórios do passo 1. O valor não é pedido e não é guardado.</p>
+                </li>
+                <li>
+                    <h3>Onde as variáveis moram</h3>
+                    <p>Na função publicada, em Configuration, Environment variables. Na máquina local, no ambiente do processo que sobe a Curfew. Sem essas variáveis a fila continua o exemplo. Para desligar, apague as variáveis, revogue o token e desative a access key.</p>
+                </li>
+                <li>
+                    <h3>A porta da publicação</h3>
+                    <p>A HTTP API pede <code>CURFEW_GATE</code>. Abra <code>/porta</code>, digite o segredo, e o navegador guarda um cookie de uma hora. Sem esse segredo a função responde que a porta não foi configurada. Fechar acesso e emitir sessão continuam desligados neste deploy.</p>
+                </li>
+            </ol>
+            <pre class="policy">{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Action": "iam:ListAccessKeys",
+    "Resource": "arn:aws:iam::CONTA:user/curfew-leitura"
+  }]
+}</pre>
         </section>
     </main>
 

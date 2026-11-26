@@ -1,0 +1,19 @@
+{#include layout}
+{#title}Porta · Curfew{/title}
+{#body}
+    <header class="page-head">
+        <h1>Porta</h1>
+        <p>Em produção a fila só abre com o segredo definido em CURFEW_GATE. O valor não volta para a página.</p>
+    </header>
+    {#if notice}
+    <p class="notice">{notice}</p>
+    {/if}
+    <form class="lease-form" method="post" action="/porta">
+        <label>Segredo da porta
+            <input name="porta" type="password" autocomplete="current-password" required>
+        </label>
+        <button type="submit">Entrar</button>
+    </form>
+    <p class="footnote">Nesta instância local a fila continua aberta. A trava vale no perfil prod, publicado na HTTP API.</p>
+{/body}
+{/include}
