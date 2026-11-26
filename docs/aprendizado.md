@@ -27,3 +27,4 @@ Cada linha cita um teste que trava a correção. `LearningLedgerTest` falha se a
 | A fila mostra a chave de exemplo e 24 horas não entra | `LeasePageTest.exampleLeaseEndsInsideADay` |
 | A sessão AWS armada não entra na fila | `LeaseDeliveryTest.armedSessionStaysOutOfTheQueue` |
 | Chave AWS em branco não pede sessão | `StsSessionMintTest.blankKeysDoNotCallTheAccount` |
+| Toda chave aceita acaba antes de um dia e a noite desarmada conserva quem pede humano | `LeaseAndNightPropertyTest.everyLeaseEndsInsideADayAndTheQueueHidesTheSecret` |

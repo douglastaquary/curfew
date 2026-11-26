@@ -21,6 +21,8 @@ Abra `http://127.0.0.1:8473/`. Estados da fila: `/?estado=vazio`, `/?estado=carr
 ./mvnw test
 ```
 
+O limite da chave e da noite, que os exemplos não percorrem inteiro, é `./mvnw -q -Dtest=LeaseAndNightPropertyTest test`. A skill é `.cursor/skills/verify-lease-bound/SKILL.md`.
+
 ## Onde mexer
 
 - Fila fictícia: `src/main/java/curfew/scan/MockAccessSource.java`
