@@ -17,7 +17,7 @@ Rode na raiz do clone. Não imprima access key, token nem `CURFEW_GATE`. Não ap
 
 ## Publicar
 
-Antes do pacote, rode `./mvnw -version`. A linha `Java version` precisa ser 21 ou mais nova. Se `generate-code` falhar com `NoSuchElementException`, o Maven está num JDK antigo. Não mexa no código. No Mac, `export JAVA_HOME="$(/usr/libexec/java_home -v 21)"` e rode `./mvnw -version` de novo.
+Antes do pacote, rode `./mvnw -version`. A linha `Java version` precisa ser 21 ou mais nova. Se o runtime contiver `jbr-17`, é o Java 17 do IntelliJ. Não empacote com ele. No Mac, instale com `brew install --cask temurin@21`, depois `export JAVA_HOME="$(/usr/libexec/java_home -v 21)"`. Se `generate-code` falhar com `NoSuchElementException`, é esse JDK antigo. Não mexa no código.
 
 `CURFEW_GATE` tem 16 caracteres ou mais e fica só no ambiente desta execução. Não grave em `samconfig.toml`.
 

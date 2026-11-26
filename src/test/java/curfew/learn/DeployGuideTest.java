@@ -36,6 +36,9 @@ class DeployGuideTest {
         assertTrue(pom.contains("<version>[21,)</version>"));
         assertTrue(guide.contains("NoSuchElementException"));
         assertTrue(guide.contains("./mvnw -version"));
+        assertTrue(guide.contains("jbr-17"));
+        assertTrue(guide.contains("temurin@21"));
         assertTrue(skill.contains("NoSuchElementException"));
+        assertTrue(skill.contains("jbr-17"));
     }
 }

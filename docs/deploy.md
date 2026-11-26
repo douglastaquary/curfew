@@ -18,13 +18,15 @@ Com a identidade de publicação confirmada, confira o Java que o Maven usa. A l
 ./mvnw -version
 ```
 
-No Mac, se essa linha for 8, 11 ou 17:
+No Mac, se essa linha for 17 e o runtime contiver `jbr-17`, esse é o Java do IntelliJ. Ele não serve. Instale o Temurin 21 e só então aponte o `JAVA_HOME`. Sem esse JDK, `java_home -v 21` não acha nada.
 
 ```bash
-/usr/libexec/java_home -V
+brew install --cask temurin@21
 export JAVA_HOME="$(/usr/libexec/java_home -v 21)"
 ./mvnw -version
 ```
+
+A linha `Java version` tem de começar com 21. O runtime não pode continuar em `jbr-17`.
 
 Se `generate-code` falhar com `NoSuchElementException`, é esse JDK antigo. Não é o código da Curfew.
 
@@ -54,5 +56,6 @@ O zip é `target/function.zip`. Gerar o zip não publica.
 | 26 nov 2026, 00:21, Brasília | SAM CLI 1.174.1. `sam validate` aceitou o template. O zip ficou em 34 MB. `sam deploy` saiu 1, `Unable to locate credentials` | O artefato está pronto. A conta AWS é o que falta. |
 | 26 nov 2026, 08:07, Brasília | `aws login` recusou: `Profile 'default' is already configured with Access Key credentials` | O perfil default já tem access key. Não apague a credencial do perfil default. O passo é `aws sts get-caller-identity`, não um login novo. |
 | 26 nov 2026, 08:19, Brasília | `./mvnw -q package` falhou em `generate-code` com `NoSuchElementException` | O Maven não estava no Java 21. Confira `./mvnw -version` e o `JAVA_HOME`. |
+| 26 nov 2026, 08:25, Brasília | `./mvnw -version` mostrou Java 17.0.14, runtime `jbr-17` | É o JDK do IntelliJ. Instale o Temurin 21 e exporte o `JAVA_HOME` para ele. |
 
 Não cole a access key no chat. A skill que o próximo agente segue é `.cursor/skills/curfew-deploy/SKILL.md`.
