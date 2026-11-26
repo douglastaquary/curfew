@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{#insert title}Curfew{/insert}</title>
+    <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+    <header class="top">
+        <a class="mark" href="/">Curfew</a>
+        <p class="tag">Acessos que o agente deixou valendo</p>
+    </header>
+    <div class="shell">
+        <nav class="nav" aria-label="Seções">
+            <a href="/" aria-current="{#if nav == 'fila'}page{#else}false{/if}">Fila</a>
+            <a href="/varredura" aria-current="{#if nav == 'varredura'}page{#else}false{/if}">Varredura</a>
+            <a href="/conexoes" aria-current="{#if nav == 'conexoes'}page{#else}false{/if}">Conexões</a>
+        </nav>
+        <main>
+            {#insert body}{/insert}
+        </main>
+    </div>
+    <script src="/app.js"></script>
+</body>
+</html>

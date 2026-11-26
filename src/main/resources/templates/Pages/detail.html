@@ -1,0 +1,22 @@
+{#include layout}
+{#title}{item.kindLabel} · Curfew{/title}
+{#body}
+    <header class="page-head">
+        <h1>{item.kindLabel}</h1>
+        <p>{item.system} · aberto há {item.ageDays} dias · {item.owner}</p>
+    </header>
+    <section class="panel">
+        <h2>Ação sugerida</h2>
+        <p class="action">{item.action}</p>
+        <h2>Motivo da regra</h2>
+        <p>{item.reason}</p>
+        <h2>Quem confirmaria</h2>
+        {#if item.needsHuman}
+            <p>Uma pessoa da plataforma. Sem essa confirmação, a Curfew não mexe no recurso.</p>
+        {#else}
+            <p>A regra já tem uma ação. Neste corte ela não é executada.</p>
+        {/if}
+    </section>
+    <p><a href="/">Voltar à fila</a></p>
+{/body}
+{/include}

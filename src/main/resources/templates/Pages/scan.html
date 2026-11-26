@@ -1,0 +1,38 @@
+{#include layout}
+{#title}Varredura · Curfew{/title}
+{#body}
+    <header class="page-head">
+        <h1>Varredura</h1>
+        <p>As regras classificam a fila. Nenhuma chamada de modelo sai daqui.</p>
+    </header>
+    {#if state == 'LOADING'}
+        <p class="banner" role="status">Lendo GitHub e AWS.</p>
+    {#else if state == 'ERROR'}
+        <p class="banner banner-error" role="alert">A leitura não completou. Nada foi fechado.</p>
+    {#else}
+        <dl class="stats">
+            <div>
+                <dt>Itens lidos</dt>
+                <dd>{items}</dd>
+            </div>
+            <div>
+                <dt>Classificados por regra</dt>
+                <dd>{report.itemsClassifiedByRule}</dd>
+            </div>
+            <div>
+                <dt>Chamadas de modelo</dt>
+                <dd>{report.modelCalls}</dd>
+            </div>
+            <div>
+                <dt>Tokens evitados</dt>
+                <dd>{report.tokensAvoided}</dd>
+            </div>
+        </dl>
+        {#if state == 'EMPTY'}
+            <p class="banner">Nenhum acesso esquecido nesta leitura.</p>
+        {#else}
+            <p class="footnote">A regra classificou tudo. O modelo ficaria para uma linha ambígua, e só depois de decisões reais.</p>
+        {/if}
+    {/if}
+{/body}
+{/include}

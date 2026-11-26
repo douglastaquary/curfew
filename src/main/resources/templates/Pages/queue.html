@@ -1,0 +1,51 @@
+{#include layout}
+{#title}Fila · Curfew{/title}
+{#body}
+    <header class="page-head">
+        <h1>Fila</h1>
+        <p>O que ainda está aberto depois da tarefa. Dados fictícios. Nada é fechado.</p>
+    </header>
+    {#if state == 'LOADING'}
+        <p class="banner" role="status">Lendo GitHub e AWS.</p>
+    {#else if state == 'ERROR'}
+        <p class="banner banner-error" role="alert">A leitura não completou. Nada foi fechado.</p>
+    {#else if state == 'EMPTY'}
+        <p class="banner">Nenhum acesso esquecido nesta leitura.</p>
+    {#else}
+        <div class="filters" role="group" aria-label="Filtrar por tipo">
+            <button type="button" data-filter="todos" aria-pressed="true">Todos</button>
+            <button type="button" data-filter="token" aria-pressed="false">Token</button>
+            <button type="button" data-filter="key" aria-pressed="false">Chave</button>
+            <button type="button" data-filter="webhook" aria-pressed="false">Webhook</button>
+            <button type="button" data-filter="permission" aria-pressed="false">Permissão</button>
+            <button type="button" data-filter="secret" aria-pressed="false">Senha no log</button>
+            <button type="button" data-filter="resource" aria-pressed="false">Recurso</button>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>O que sobrou</th>
+                        <th>Onde</th>
+                        <th>Há quanto tempo</th>
+                        <th>Dono</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {#for item in items}
+                    <tr data-kind="{item.kind}">
+                        <td><a href="/acessos/{item.id}">{item.kindLabel}</a></td>
+                        <td>{item.system}</td>
+                        <td>{item.ageDays} dias</td>
+                        <td>{item.owner}</td>
+                        <td>{item.action}</td>
+                    </tr>
+                    {/for}
+                </tbody>
+            </table>
+        </div>
+        <p class="footnote">Estados de leitura: <a href="/?estado=vazio">vazio</a>, <a href="/?estado=carregando">carregando</a>, <a href="/?estado=erro">erro</a>.</p>
+    {/if}
+{/body}
+{/include}
