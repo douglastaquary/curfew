@@ -34,6 +34,16 @@ Quem usa a aplicação encontra isto:
 - `/conexoes` mostra se GitHub e AWS estão ligados. Sem variável, os dois ficam desligados e a fila é o exemplo.
 - `docs/index.html` é a landing. No ar: https://douglastaquary.github.io/curfew/
 
+## Decidir
+
+Antes do código, escreva em um parágrafo o problema nas suas palavras. Se o parágrafo pede deploy, modelo, enxame ou fechar acesso, pare.
+
+Mecânica: `plugins/pstack/skills/how/SKILL.md`. Motivo: `plugins/pstack/skills/why/SKILL.md`, a partir do git e de `docs/aprendizado.md`.
+
+Se a dúvida é de tela ou de formato de dado, faça um rascunho em `scratch/` e um print. O rascunho não entra em `src/`. O playbook é `plugins/pstack/skills/poteto-mode/playbooks/prototype.md`.
+
+Mudança óbvia de um ou dois arquivos não ganha plano. Plano maior só depois do desenho escolhido, e cada item passa em `python3 .cursor/skills/verify-curfew/verify-curfew.py plan <arquivo>`. Apague o arquivo quando o corte fechar. Arena de vários modelos e merge sozinho continuam fechados.
+
 ## Desenvolver
 
 1. Diga o objetivo e a menor mudança que o cumpre. Nomeie o dado antes do código. Os tipos de hoje são `RawAccess` e `ClassifiedAccess`. Faça só essa mudança.

@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
 
@@ -49,5 +50,69 @@ class VerifyCurfewTest {
         assertFalse(output.contains("ghp_"));
         assertFalse(output.contains("AKIA"));
         assertFalse(Files.exists(Path.of(".cursor/skills/verify-curfew/run/state.json")));
+    }
+
+    @Test
+    void planRequiresLiveProofAndRejectsDeploy() throws Exception {
+        Path dir = Files.createTempDirectory("curfew-plan");
+        try {
+            String accepted = runPlan(dir.resolve("aceito.md"), """
+                    # Fila
+
+                    ## Contador
+
+                    - Prova: `python3 .cursor/skills/verify-curfew/verify-curfew.py get /varredura` devolve h1 Varredura.
+                    """);
+            assertTrue(accepted.contains("\"ok\": true"));
+            assertTrue(accepted.contains("\"items\": 1"));
+
+            String noScreen = runPlan(dir.resolve("regra.md"), """
+                    # Regra
+
+                    ## Idade
+
+                    - Prova: `./mvnw test` sem tela.
+                    """);
+            assertTrue(noScreen.contains("\"ok\": true"));
+
+            String testsOnly = runPlan(dir.resolve("so-teste.md"), """
+                    # Fila
+
+                    ## Contador
+
+                    - Prova: `./mvnw test`
+                    """);
+            assertTrue(testsOnly.contains("\"ok\": false"));
+
+            String closed = runPlan(dir.resolve("fecha.md"), """
+                    # Fora
+
+                    ## Publicar
+
+                    - Prova: `python3 .cursor/skills/verify-curfew/verify-curfew.py prove`
+                    - Mudança: sam deploy e fechar acesso.
+                    """);
+            assertTrue(closed.contains("deploy ou fechamento"));
+            assertFalse(closed.contains("ghp_"));
+            assertFalse(closed.contains("AKIA"));
+        } finally {
+            for (String name : List.of("aceito.md", "regra.md", "so-teste.md", "fecha.md")) {
+                Files.deleteIfExists(dir.resolve(name));
+            }
+            Files.deleteIfExists(dir);
+        }
+    }
+
+    private static String runPlan(Path file, String markdown) throws Exception {
+        Files.writeString(file, markdown);
+        Process process = new ProcessBuilder(
+                "python3",
+                ".cursor/skills/verify-curfew/verify-curfew.py",
+                "plan",
+                file.toString())
+                .start();
+        String output = new String(process.getInputStream().readAllBytes());
+        process.waitFor(10, TimeUnit.SECONDS);
+        return output;
     }
 }

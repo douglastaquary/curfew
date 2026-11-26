@@ -8,3 +8,4 @@ target/
 samconfig.toml
 .aws-sam/
 .cursor/skills/verify-curfew/run/
+scratch/

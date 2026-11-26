@@ -68,6 +68,8 @@ python3 .cursor/skills/verify-curfew/verify-curfew.py prove
 
 O comando sobe uma instância sem as variáveis de conta, confere a varredura do exemplo e grava o print em `.cursor/skills/verify-curfew/artifacts/`. Ele encerra o processo que ele mesmo subiu. Rode isso antes de `./mvnw test` se a porta 8473 ainda estiver ocupada.
 
+Um plano de várias mudanças só segue depois que `python3 .cursor/skills/verify-curfew/verify-curfew.py plan <arquivo>` aceita o arquivo. Cada item precisa de prova no ar. Deploy e fechamento de acesso são recusados. Apague o plano quando o corte fechar. Rascunho de tela fica em `scratch/` e não entra no código.
+
 `./mvnw package` gera `target/function.zip`. Gerar o zip não publica nada. Não rode `sam deploy` neste corte.
 
 ## Erros comuns

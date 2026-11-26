@@ -19,3 +19,4 @@ Cada linha cita um teste que trava a correção. `LearningLedgerTest` falha se a
 | A leitura real descarta URL, material de chave e valor de segredo | `MetadataInventoryTest.dropsUrlKeyMaterialAndSecretValues` |
 | O mapa de verificação cobre as quatro telas | `VerifyCurfewTest.featureMapKeepsTheFourScreens` |
 | O dry-run da verificação não sobe o app nem imprime segredo | `VerifyCurfewTest.dryRunDoesNotStartTheAppOrPrintASecret` |
+| O plano exige prova no ar e recusa deploy ou fechamento | `VerifyCurfewTest.planRequiresLiveProofAndRejectsDeploy` |

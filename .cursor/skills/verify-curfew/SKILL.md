@@ -48,6 +48,14 @@ O print vai para `.cursor/skills/verify-curfew/artifacts/`. O fluxo da varredura
 python3 .cursor/skills/verify-curfew/verify-curfew.py screenshot /varredura
 ```
 
+Um plano, quando existe, passa por:
+
+```bash
+python3 .cursor/skills/verify-curfew/verify-curfew.py plan caminho/do-plano.md
+```
+
+Cada item `##` precisa de `- Prova:` com `verify-curfew.py`. Item sem tela usa `./mvnw test` e as palavras `sem tela`. `sam deploy` e `fechar acesso` reprovam o arquivo. Apague o plano quando o corte fechar.
+
 `prove` sobe, lê a varredura, grava o print e encerra:
 
 ```bash

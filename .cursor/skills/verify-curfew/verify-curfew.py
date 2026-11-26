@@ -57,6 +57,9 @@ def main():
 
     sub.add_parser("prove", help="Sobe, confere a varredura, grava o print e encerra.")
 
+    plan = sub.add_parser("plan", help="Confere se cada item do plano tem prova no ar.")
+    plan.add_argument("file")
+
     args = parser.parse_args()
     try:
         if args.command == "up":
@@ -73,6 +76,8 @@ def main():
             emit(cmd_screenshot(args.path))
         elif args.command == "prove":
             emit(cmd_prove())
+        elif args.command == "plan":
+            emit(cmd_plan(args.file))
     except SystemExit:
         raise
     except Exception as exception:
@@ -246,6 +251,47 @@ def cmd_screenshot(path):
     if not target.exists() or target.stat().st_size < 1000:
         fail("O print não foi gravado.", "Rode screenshot de novo. Não apague artifacts/ no down.")
     return {"ok": True, "path": str(target.relative_to(ROOT)), "bytes": target.stat().st_size, "secret": False}
+
+
+def cmd_plan(path):
+    file = Path(path)
+    if not file.is_file():
+        fail("O plano não está nesse caminho.", "Passe o arquivo markdown. Não deixe o plano no repositório depois do corte.")
+    text = file.read_text(encoding="utf-8")
+    lowered = text.lower()
+    if "sam deploy" in lowered or "fechar acesso" in lowered:
+        fail(
+            "O plano pede deploy ou fechamento de acesso.",
+            "Tire esse passo. Este corte não publica na AWS e não fecha acesso.",
+        )
+    sections = []
+    title = None
+    body = []
+    for line in text.splitlines():
+        if line.startswith("## "):
+            if title is not None:
+                sections.append((title, body))
+            title = line[3:].strip()
+            body = []
+        elif title is not None:
+            body.append(line)
+    if title is not None:
+        sections.append((title, body))
+    if not sections:
+        fail("O plano não tem item.", "Cada mudança precisa de um título ## e de uma linha - Prova:.")
+    weak = []
+    for name, lines in sections:
+        proof = next((line for line in lines if line.startswith("- Prova:")), "")
+        live = "verify-curfew.py" in proof
+        unit_only = "./mvnw test" in proof and "sem tela" in proof
+        if not (live or unit_only):
+            weak.append(name or "(sem título)")
+    if weak:
+        fail(
+            "Estes itens não têm prova no ar: " + ", ".join(weak) + ".",
+            "Use verify-curfew.py na linha - Prova:. Se o item não mexe em tela, escreva ./mvnw test e sem tela.",
+        )
+    return {"ok": True, "items": len(sections), "secret": False}
 
 
 def cmd_prove():
