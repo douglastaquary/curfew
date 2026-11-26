@@ -3,103 +3,151 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Curfew — acessos que o agente deixou valendo</title>
-    <meta name="description" content="A Curfew coloca no fluxo de segurança da informação os acessos que um agente de IA deixou valendo: token, chave, webhook e senha no log.">
+    <title>Curfew — o acesso que ficou depois da tarefa</title>
+    <meta name="description" content="A Curfew lista token, chave, webhook e senha no log que agente, sistema e pessoa deixaram valendo. O gráfico usa o DBIR 2025 da Verizon e o Cost of a Data Breach 2025 da IBM.">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230f5c4c'/%3E%3Cpath d='M10 15V12a6 6 0 0 1 12 0v3' fill='none' stroke='%23fffdf8' stroke-width='2'/%3E%3Crect x='8' y='15' width='16' height='10' fill='%23fffdf8'/%3E%3C/svg%3E">
     <link rel="stylesheet" href="site.css">
 </head>
 <body>
-    <header class="wrap top">
-        <a class="mark" href="#topo">Curfew</a>
-        <nav>
-            <a href="#beneficios">Benefícios</a>
-            <a href="#fluxo">Fluxo</a>
-            <a href="#telas">Telas</a>
-        </nav>
+    <header class="top">
+        <div class="wrap bar">
+            <a class="mark" href="#topo">Curfew</a>
+            <nav aria-label="Seções">
+                <a href="#mercado">Mercado</a>
+                <a href="#produto">Produto</a>
+                <a href="#telas">Telas</a>
+            </nav>
+        </div>
     </header>
 
     <main id="topo">
-        <section class="wrap hero">
-            <p class="kicker">Segurança da informação</p>
-            <h1>O agente terminou. O acesso continuou valendo.</h1>
-            <p class="lede">Token de GitHub, chave de AWS, webhook e senha escrita no log da sessão ficam abertos depois da tarefa. A Curfew coloca essa sobra na fila que o time de segurança já deveria ver: idade, dono e a ação. O valor do segredo não entra na fila.</p>
-            <div class="hero-actions">
-                <a class="button" href="#telas">Ver a fila</a>
-                <a class="button quiet" href="#beneficios">O que a empresa ganha</a>
+        <section class="hero-band">
+            <div class="wrap hero">
+                <div>
+                    <p class="kicker">Segurança da informação</p>
+                    <h1>O trabalho acabou. O acesso não.</h1>
+                    <p class="lede">Agente, sistema e pessoa deixam token, chave, webhook e senha no log. A Curfew coloca essa sobra na fila: idade, dono e a ação. O valor do segredo não entra.</p>
+                    <div class="hero-actions">
+                        <a class="button" href="#mercado">Ver o dado de mercado</a>
+                        <a class="button quiet" href="#produto">O que a Curfew faz</a>
+                    </div>
+                </div>
+                <figure class="chart">
+                    <figcaption>
+                        <h2>Como o vazamento começa</h2>
+                        <p>Fatia dos vazamentos em que a porta de entrada foi identificada. A escala vai de 0 a 30%.</p>
+                    </figcaption>
+                    <ul class="bars">
+                        <li>
+                            <span class="bar-name">Credencial comprometida</span>
+                            <span class="bar-track" aria-hidden="true"><span class="bar-fill" style="width: 73.33%"></span></span>
+                            <span class="bar-value">22%</span>
+                        </li>
+                        <li>
+                            <span class="bar-name">Vulnerabilidade explorada</span>
+                            <span class="bar-track" aria-hidden="true"><span class="bar-fill" style="width: 66.67%"></span></span>
+                            <span class="bar-value">20%</span>
+                        </li>
+                        <li>
+                            <span class="bar-name">Phishing</span>
+                            <span class="bar-track" aria-hidden="true"><span class="bar-fill" style="width: 53.33%"></span></span>
+                            <span class="bar-value">16%</span>
+                        </li>
+                    </ul>
+                    <p class="source">Verizon DBIR 2025. Vetores conhecidos, sem erro e sem mau uso interno. n = 9.891. Base de 22.052 incidentes e 12.195 vazamentos, em 139 países, de 1º de novembro de 2023 a 31 de outubro de 2024. <a href="https://www.verizon.com/business/resources/reports/dbir/2025-dbir-executive-summary.pdf">Resumo executivo</a>.</p>
+                </figure>
             </div>
         </section>
 
-        <section class="wrap band" id="beneficios">
-            <h2>O que muda para quem integra no fluxo</h2>
-            <p class="section-note">A ferramenta entra onde a segurança da informação já decide o que continua aberto. Não é mais uma lista que alguém monta na sexta.</p>
+        <section class="wrap band" id="mercado">
+            <h2>O que o log e a tarefa já entregam ao atacante</h2>
+            <p class="section-note">Estudos de mercado, não a base da Curfew. Cada número diz de qual corte saiu.</p>
+            <div class="facts">
+                <article>
+                    <p class="fact-value">54%</p>
+                    <h3>Vítimas de ransomware com o domínio em log de credencial</h3>
+                    <p>Em 2024, a Verizon cruzou vítimas de ransomware divulgadas com logs de infostealer. 54% tinham o domínio da empresa nesse material. 40% tinham e-mail corporativo. 30% dos sistemas comprometidos por infostealer eram licenciados para empresa. 46% dos que tinham login corporativo não eram geridos.</p>
+                    <p class="source">Fonte: Verizon DBIR 2025.</p>
+                </article>
+                <article>
+                    <p class="fact-value">20%</p>
+                    <h3>Organizações com incidente de IA sem aprovação</h3>
+                    <p>No estudo da IBM, 20% sofreram vazamento ligado a shadow AI: uso de IA sem aprovação do empregador. Em 65% desses casos saiu dado pessoal de cliente. Em 40%, propriedade intelectual. Onde o uso de IA sem aprovação era alto, o vazamento custou US$ 670 mil a mais do que onde esse uso era baixo ou nulo.</p>
+                    <p class="source">Fonte: IBM Cost of a Data Breach 2025, Ponemon Institute. 600 organizações, vazamentos de março de 2024 a fevereiro de 2025.</p>
+                </article>
+                <article>
+                    <p class="fact-value">97%</p>
+                    <h3>Vazamentos de IA sem controle de acesso</h3>
+                    <p>13% das organizações relataram vazamento em modelo ou aplicação de IA. Entre essas, 97% disseram que faltava controle de acesso. Quando a porta do vazamento foi credencial comprometida, o custo médio foi de US$ 4,67 milhões e a identificação levou 186 dias.</p>
+                    <p class="source">Fonte: <a href="https://newsroom.ibm.com/2025-07-30-ibm-report-13-of-organizations-reported-breaches-of-ai-models-or-applications,-97-of-which-reported-lacking-proper-ai-access-controls">IBM, 30 de julho de 2025</a>.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="wrap band" id="produto">
+            <h2>A Curfew mostra a sobra antes que ela vire porta</h2>
+            <p class="section-note">A fila é o lugar em que segurança e plataforma veem o mesmo acesso, com a ação já escrita.</p>
             <div class="benefits">
                 <article class="card">
-                    <h3>Fluxo de segurança da informação</h3>
-                    <p>Cada acesso esquecido vira uma linha com sistema, idade, dono e ação: revogar, expirar, desligar, reduzir, apagar do texto ou trancar e pedir um humano. Plataforma executa. Segurança vê a fila com data.</p>
+                    <h3>Uma linha por acesso</h3>
+                    <p>Token, chave, webhook, permissão larga, senha no log e recurso que pode ser de produção. Cada um com sistema, idade, dono e ação.</p>
                 </article>
                 <article class="card">
-                    <h3>Vulnerabilidade de dados</h3>
-                    <p>A janela é o tempo em que o acesso segue válido. Um token de 18 dias sem dono, uma chave de 11 e uma permissão de admin de 27 dias continuam abrindo GitHub e AWS depois que o pull request já entrou.</p>
+                    <h3>A ação já vem na linha</h3>
+                    <p>Revogar, expirar, desligar, reduzir, apagar do texto ou trancar e pedir um humano. Produção não segue sem uma pessoa.</p>
                 </article>
                 <article class="card">
-                    <h3>Vazamento de dado sensível</h3>
-                    <p>Senha no log do agente e chave ainda capaz de ler a conta são vazamento em curso. A linha aponta o texto e a chave. <strong>O segredo em si não é copiado</strong> para a fila, o log ou a URL.</p>
+                    <h3>O segredo fica de fora</h3>
+                    <p>A empresa vê que o acesso existe. Não vê o valor da chave, do token ou da senha. A sessão da tarefa, quando existe, dura menos de 24 horas.</p>
                 </article>
             </div>
-        </section>
-
-        <section class="wrap band" id="fluxo">
-            <h2>Como a sobra entra na fila</h2>
-            <p class="section-note">A leitura é o primeiro passo. Fechar o acesso só acontece quando a empresa autoriza essa ação.</p>
             <ol class="steps">
                 <li>
                     <h3>A tarefa acaba</h3>
-                    <p>O agente usou um token, uma chave ou um webhook e ninguém recolheu.</p>
+                    <p>O acesso usado pelo agente, pelo sistema ou pela pessoa continua valendo.</p>
                 </li>
                 <li>
                     <h3>A leitura lista</h3>
-                    <p>GitHub e AWS entram em modo leitura. A regra classifica idade, dono e escopo.</p>
+                    <p>GitHub e AWS entram em modo leitura. A regra olha idade, dono e escopo.</p>
                 </li>
                 <li>
-                    <h3>A fila mostra a ação</h3>
-                    <p>Cada linha já diz o que fazer. Produção trava e espera um humano.</p>
+                    <h3>A fila pede a ação</h3>
+                    <p>O que não pede humano sai da fila local. Produção fica e pergunta.</p>
                 </li>
                 <li>
-                    <h3>O segredo fica de fora</h3>
-                    <p>A empresa vê o acesso. Não vê o valor da chave, do token ou da senha.</p>
+                    <h3>A conta só entra com sim</h3>
+                    <p>Fechar no GitHub e emitir sessão AWS dependem de uma variável explícita.</p>
                 </li>
             </ol>
         </section>
 
         <section class="wrap band" id="telas">
-            <h2>Telas desta versão</h2>
-            <p class="section-note">Os prints usam o exemplo. Sem variável, nada é lido de uma conta real. Com leitura ligada, entram nome, idade e dono. O valor do segredo fica de fora e nada é fechado. O log chega linha a linha, no horário de Brasília.</p>
+            <h2>A fila, nesta versão</h2>
+            <p class="section-note">Os prints são o exemplo. Sem variável, nenhuma conta real é lida. Com leitura ligada, entram nome, idade e dono.</p>
             <div class="shots">
                 <figure>
-                    <img src="prints/fila.png" alt="Fila da Curfew com seis acessos fictícios e a ação de cada um.">
-                    <figcaption><strong>Fila.</strong> Token, webhook, chave, permissão, senha no log e recurso, cada um com a ação.</figcaption>
+                    <img src="prints/fila.png" alt="Fila da Curfew com seis acessos de exemplo e a ação de cada um.">
+                    <figcaption><strong>Fila.</strong> Seis acessos, cada um com a ação.</figcaption>
                 </figure>
                 <figure>
                     <img src="prints/detalhe.png" alt="Detalhe de um token do GitHub sem dono, aberto há 18 dias, com a ação revogar.">
-                    <figcaption><strong>Detalhe.</strong> Idade, dono e o motivo da ação, sem o valor do segredo.</figcaption>
+                    <figcaption><strong>Detalhe.</strong> Idade, dono e o motivo. Sem o valor.</figcaption>
                 </figure>
                 <figure>
-                    <img src="prints/varredura.png" alt="Tela de varredura com contadores e o log ao vivo da leitura.">
-                    <figcaption><strong>Varredura.</strong> O log acompanha cada acesso. Seis itens, zero chamadas de modelo, 720 tokens evitados.</figcaption>
+                    <img src="prints/varredura.png" alt="Varredura com contadores e o log da leitura, no horário de Brasília.">
+                    <figcaption><strong>Varredura.</strong> O log acompanha cada acesso. Zero chamada de modelo.</figcaption>
                 </figure>
                 <figure>
-                    <img src="prints/conexoes.png" alt="Tela de conexões com GitHub e AWS ainda sem leitura ligada.">
-                    <figcaption><strong>Conexões.</strong> Sem variável, GitHub e AWS ficam desligados. Com a variável, a varredura lê metadado e descarta o valor.</figcaption>
+                    <img src="prints/conexoes.png" alt="Conexões com GitHub e AWS ainda sem leitura ligada.">
+                    <figcaption><strong>Conexões.</strong> GitHub e AWS só leem quando a variável existe.</figcaption>
                 </figure>
-            </div>
-            <div class="limit">
-                <p>A fila já lê GitHub e AWS quando a variável existe. Credencial não entra no repositório. Deploy e fechamento de acesso continuam fora, até um sim explícito.</p>
             </div>
         </section>
     </main>
 
     <footer class="wrap foot">
-        <p>Curfew. Acessos que o agente deixou valendo.</p>
+        <p>Curfew. A fila do acesso que a tarefa deixou aberto.</p>
+        <p>Números de mercado: Verizon DBIR 2025 e IBM Cost of a Data Breach 2025. Não são clientes da Curfew.</p>
     </footer>
 </body>
 </html>
