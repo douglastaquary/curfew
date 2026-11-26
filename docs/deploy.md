@@ -71,6 +71,9 @@ O zip é `target/function.zip`. Gerar o zip não publica.
 | 26 nov 2026, 08:42, Brasília | `python3.12 -m pip install pygments` respondeu `externally-managed-environment` | Esse Python é do Homebrew. Use `--break-system-packages`. Um venv não alcança o `sam` já instalado. |
 | 26 nov 2026, 08:43, Brasília | `sam --version` imprimiu `SAM CLI, version 1.132.0` | O CLI passou. Não reinstale. Siga para o pacote no Java 21 e para o deploy. |
 | 26 nov 2026, 08:47, Brasília | A stack `curfew` subiu em us-east-1. `ApiUrl` é `https://f3nqvezln1.execute-api.us-east-1.amazonaws.com` | A função responde 500, `Internal Server Error`, em `/` e `/porta`. O próximo passo é o log, não outro deploy. |
+| 26 nov 2026, 08:51, Brasília | O log diz `Missing HTTP method in the request event` | A HTTP API falava payload 2.0. A função lê o formato 1.0. O template pede `PayloadFormatVersion` 1.0. |
+
+O 500 vem do formato do evento. A HTTP API mandava payload format 2.0. A extensão lê o formato 1.0 e registra `Missing HTTP method in the request event`. O template agora pede `PayloadFormatVersion` 1.0. O endereço continua o mesmo. Publique de novo com o mesmo `CURFEW_GATE`.
 
 A stack existe. A página ainda não abre. No Mac, com o mesmo perfil AWS:
 

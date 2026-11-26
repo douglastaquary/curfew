@@ -58,4 +58,16 @@ class DeployGuideTest {
         assertTrue(skill.contains("No module named 'pygments'"));
         assertTrue(skill.contains("não rode `brew reinstall aws-sam-cli`"));
     }
+
+    @Test
+    void httpApiUsesPayloadOne() throws Exception {
+        String pom = Files.readString(Path.of("pom.xml"));
+        String template = Files.readString(Path.of("template.yaml"));
+        String guide = Files.readString(Path.of("docs/deploy.md"));
+
+        assertTrue(pom.contains("quarkus-amazon-lambda-rest"));
+        assertFalse(pom.contains("quarkus-amazon-lambda-http"));
+        assertTrue(template.contains("PayloadFormatVersion: \"1.0\""));
+        assertTrue(guide.contains("Missing HTTP method in the request event"));
+    }
 }
