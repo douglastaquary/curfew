@@ -30,6 +30,13 @@ A linha `Java version` tem de começar com 21. O runtime não pode continuar em 
 
 Se `generate-code` falhar com `NoSuchElementException`, é esse JDK antigo. Não é o código da Curfew.
 
+Antes do deploy, `sam --version` precisa imprimir a versão. Se aparecer `No module named 'pygments'`, o CLI foi instalado sem essa biblioteca. No Mac, com o Python 3.12 de `/usr/local`:
+
+```bash
+python3.12 -m pip install pygments
+sam --version
+```
+
 ```bash
 ./mvnw -q package
 export CURFEW_GATE='um-segredo-de-16-ou-mais'
@@ -57,5 +64,6 @@ O zip é `target/function.zip`. Gerar o zip não publica.
 | 26 nov 2026, 08:07, Brasília | `aws login` recusou: `Profile 'default' is already configured with Access Key credentials` | O perfil default já tem access key. Não apague a credencial do perfil default. O passo é `aws sts get-caller-identity`, não um login novo. |
 | 26 nov 2026, 08:19, Brasília | `./mvnw -q package` falhou em `generate-code` com `NoSuchElementException` | O Maven não estava no Java 21. Confira `./mvnw -version` e o `JAVA_HOME`. |
 | 26 nov 2026, 08:25, Brasília | `./mvnw -version` mostrou Java 17.0.14, runtime `jbr-17` | É o JDK do IntelliJ. Instale o Temurin 21 e exporte o `JAVA_HOME` para ele. |
+| 26 nov 2026, 08:34, Brasília | `sam` morreu com `No module named 'pygments'` | O CLI está no Python 3.12 de `/usr/local` sem essa biblioteca. `python3.12 -m pip install pygments` e depois `sam --version`. |
 
 Não cole a access key no chat. A skill que o próximo agente segue é `.cursor/skills/curfew-deploy/SKILL.md`.

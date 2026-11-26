@@ -31,3 +31,4 @@ Cada linha cita um teste que trava a correção. `LearningLedgerTest` falha se a
 | Produção sem segredo de porta fica fechada, e o segredo não volta na página | `GateDecisionTest.prodWithoutASecretStaysLocked` |
 | Perfil default com access key não é apagado nem trocado por aws login | `DeployGuideTest.accessKeyProfileIsUsedAsIs` |
 | O pacote exige o Java que o Maven usa, 21 ou mais novo | `DeployGuideTest.packageRunsOnJava21` |
+| O sam sem pygments não chega na AWS | `DeployGuideTest.samNeedsPygments` |

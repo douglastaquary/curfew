@@ -41,4 +41,14 @@ class DeployGuideTest {
         assertTrue(skill.contains("NoSuchElementException"));
         assertTrue(skill.contains("jbr-17"));
     }
+
+    @Test
+    void samNeedsPygments() throws Exception {
+        String guide = Files.readString(Path.of("docs/deploy.md"));
+        String skill = Files.readString(Path.of(".cursor/skills/curfew-deploy/SKILL.md"));
+
+        assertTrue(guide.contains("No module named 'pygments'"));
+        assertTrue(guide.contains("python3.12 -m pip install pygments"));
+        assertTrue(skill.contains("No module named 'pygments'"));
+    }
 }
